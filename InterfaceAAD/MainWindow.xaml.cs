@@ -1,6 +1,7 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
 using InterfaceAAD.Views;
+using DotNetEnv;
 
 namespace InterfaceAAD
 {
@@ -15,7 +16,12 @@ namespace InterfaceAAD
         public MainWindow()
         {
             InitializeComponent();
-
+            // Carrega as variáveis de ambiente do arquivo .env
+            DotNetEnv.Env.Load();
+            if (System.IO.File.Exists(".env.override"))
+            {
+                DotNetEnv.Env.Load(".env.override");
+            }
             // Default Initialization Page
             MenuList.SelectedIndex = 0;
         }

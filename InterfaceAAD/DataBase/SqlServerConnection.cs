@@ -11,7 +11,7 @@ namespace InterfaceAAD.DataBase
         /// <summary>
         /// The connection string for the SQL Server database.
         /// </summary>
-        private readonly string _connectionString = "Data Source=localhost,1411;Initial Catalog=Agencia;User ID=sa;Password=Password0!;";
+        private string _connectionString;
 
         /// <summary>
         /// The SQL Server database connection.
@@ -24,6 +24,23 @@ namespace InterfaceAAD.DataBase
         public SqlServerConnection()
         {
             // Open the database connection during initialization.
+            var host = Environment.GetEnvironmentVariable("SQL_HOST") ?? "localhost";
+            var port = Environment.GetEnvironmentVariable("SQL_PORT") ?? "";
+            var db = Environment.GetEnvironmentVariable("SQL_DB") ?? "Agencia";
+            var user = Environment.GetEnvironmentVariable("SQL_USER") ?? "";
+            var password = Environment.GetEnvironmentVariable("SQL_PASSWORD") ?? "";
+            var security = Environment.GetEnvironmentVariable("SQL_SECURITY") ?? "false";
+
+            if (!string.IsNullOrEmpty(user) && !string.IsNullOrEmpty(password))
+            {
+                host = !string.IsNullOrEmpty(port) ? host + "," + port : host;
+                _connectionString = $"Data Source={host};Initial Catalog={db};User ID={user};Password={password};";
+            }
+            else
+            {
+                _connectionString = $"Data Source={host};Initial Catalog={db};Integrated Security={security};";
+            }
+            
             _connection = new SqlConnection(_connectionString);
             _connection.Open();
         }

@@ -20,3 +20,6 @@ bld/
 # Database
 *.db-shm
 *.db-wal
+
+# .env.override
+*.override
