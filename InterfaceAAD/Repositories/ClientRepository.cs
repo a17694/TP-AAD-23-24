@@ -11,25 +11,78 @@ namespace InterfaceAAD.Repositories;
 /// </summary>
 public class ClientRepository : BaseRepository, IBaseRepository<Client>
 {
-    /// <inheritdoc />
+    #region Public Methods
+
+    /// <summary>
+    /// Adds a new client entity to the database.
+    /// </summary>
+    /// <param name="entity">The client entity to add.</param>
+    /// <returns>True if the addition is successful; otherwise, false.</returns>
     public bool Add(Client entity)
     {
-        throw new NotImplementedException();
+        // Note: The logic below always returns false. Ensure you have the correct implementation for your needs.
+        return false;
+
+        entity.ClientContacts.ForEach(contact =>
+        {
+            string query =
+                "INSERT INTO ClienteContacto (ClienteNIF, Tipo, Contacto) VALUES (@ClienteNIF, @Tipo, @Contacto)";
+
+            using (SqlCommand command = new SqlCommand(query, _db))
+            {
+                command.Parameters.AddWithValue("@ClienteNIF", entity.ClienteNIF);
+                command.Parameters.AddWithValue("@Tipo", contact.type);
+                command.Parameters.AddWithValue("@Contacto", contact.contact);
+
+                command.ExecuteNonQuery();
+            }
+        });
+
+        return false;
     }
 
-    /// <inheritdoc />
+    /// <summary>
+    /// Edits an existing client entity in the database.
+    /// </summary>
+    /// <param name="entity">The client entity to edit.</param>
+    /// <returns>True if the editing is successful; otherwise, false.</returns>
     public bool Edit(Client entity)
     {
         throw new NotImplementedException();
     }
 
-    /// <inheritdoc />
-    public Client GetById(int id)
+    /// <summary>
+    /// Retrieves a client entity by its unique identifier.
+    /// </summary>
+    /// <param name="NIF">The unique identifier of the client.</param>
+    /// <returns>The client entity if found; otherwise, an empty client.</returns>
+    public Client GetById(int NIF)
     {
-        throw new NotImplementedException();
+        using (SqlCommand command = new SqlCommand("SELECT * FROM Cliente WHERE ClienteNIF = @NIF", _db))
+        {
+            command.Parameters.AddWithValue("@NIF", NIF);
+
+            using (SqlDataReader reader = command.ExecuteReader())
+            {
+                if (reader.Read())
+                {
+                    return new Client
+                    {
+                        ClienteNIF = (int)reader["ClienteNIF"],
+                        ClienteNome = reader["ClienteNome"].ToString()
+                    };
+                }
+            }
+        }
+
+        // Return an empty client if not found
+        return new Client();
     }
 
-    /// <inheritdoc />
+    /// <summary>
+    /// Retrieves a list of all client entities from the database.
+    /// </summary>
+    /// <returns>A list of client entities.</returns>
     public List<Client> GetAll()
     {
         List<Client> clients = new List<Client>();
@@ -56,11 +109,16 @@ public class ClientRepository : BaseRepository, IBaseRepository<Client>
         return clients;
     }
 
-    /// <inheritdoc />
+    /// <summary>
+    /// Retrieves all client entities as a DataTable.
+    /// </summary>
+    /// <returns>A DataTable containing all client entities.</returns>
     public Task<DataTable> GetAllClientsAsDataTable()
     {
         List<Client> clients = GetAll();
         DataTable dataTable = DataTableConverter.ToDataTable(clients);
         return Task.FromResult(dataTable);
     }
+
+    #endregion
 }

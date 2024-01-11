@@ -1,0 +1,48 @@
+﻿<Page x:Class="InterfaceAAD.Views.ClientEditView"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:local="clr-namespace:InterfaceAAD.Views"
+      mc:Ignorable="d"
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="TestePagina">
+
+    <Grid Margin="10">
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="2*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="0.2*" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+
+
+        <TextBlock Grid.Row="0" Grid.ColumnSpan="2" FontSize="24">Utilizador</TextBlock>
+
+        <Label Grid.Row="1" Grid.Column="0">Nome *</Label>
+        <TextBox Grid.Row="1" Grid.Column="1" Margin="5,0,5,10" Text="{Binding SelectedClient.ClienteNome}" />
+
+        <!-- Adicione outros controles conforme necessário para outros detalhes do cliente -->
+
+
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch" Grid.Row="7" Grid.Column="1">
+            <Button Width="150" Content="Voltar" Click="BackButton_Click" Margin="5" />
+            <Button Width="150" Content="Cancelar" Command="{Binding CancelCommand}" Margin="5" />
+            <Button Width="150" Content="Guardar" Command="{Binding SaveCommand}" Margin="5" />
+        </StackPanel>
+
+    </Grid>
+</Page>

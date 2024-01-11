@@ -14,6 +14,11 @@ public class Client
     /// Gets or sets the name of the client.
     /// </summary>
     public string ClienteNome { get; set; }
+    
+    public List<ClientContact> ClientContacts { get; set; }
+    
+    public Client()
+    {}
 
     /// <summary>
     /// Initializes a new instance of the <see cref="Client"/> class with the specified NIF.
@@ -25,4 +30,6 @@ public class Client
         ClienteNIF = clienteNif;
         ClienteNome = clienteNome;
     }
+    
+    
 }

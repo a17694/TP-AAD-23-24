@@ -7,6 +7,7 @@
       mc:Ignorable="d"
       Title="ClientsListView" Height="450" Width="800">
     <Grid>
-        <DataGrid AutoGenerateColumns="True" ItemsSource="{Binding Clients}" />
+
+        <DataGrid Name="dataGridClientes" AutoGenerateColumns="True"  IsReadOnly="True" ItemsSource="{Binding Clients}"  MouseDoubleClick="EditClient_Click" />
     </Grid>
 </Page>

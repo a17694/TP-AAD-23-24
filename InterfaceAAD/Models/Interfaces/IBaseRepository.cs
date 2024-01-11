@@ -6,6 +6,8 @@
     /// <typeparam name="M">The type of the model for which the repository is defined.</typeparam>
     internal interface IBaseRepository<M>
     {
+        //bool Save(M entity);
+        
         /// <summary>
         /// Adds a new entity to the repository.
         /// </summary>
