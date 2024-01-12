@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:InterfaceAAD"
         mc:Ignorable="d"
-        Title="InterfaceAAD" Height="450" Width="800">
+        Title="InterfaceAAD" Height="450" Width="800" WindowStartupLocation="CenterScreen" Icon="/Agencia-transformed.png">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto"/>
@@ -14,7 +14,7 @@
 
         <!-- Menu Lateral -->
         <ListBox Name="MenuList" Grid.Column="0" SelectionChanged="MenuList_SelectionChanged">
-            <ListBoxItem Content="Clientes"/>
+            <ListBoxItem Content="Clientes" Selected="ListBoxItem_Selected"/>
             <ListBoxItem Content="Outra Página"/>
         </ListBox>
 

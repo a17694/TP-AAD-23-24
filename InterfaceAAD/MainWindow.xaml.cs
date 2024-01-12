@@ -45,5 +45,10 @@ namespace InterfaceAAD
                     break;
             }
         }
+
+        private void ListBoxItem_Selected(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

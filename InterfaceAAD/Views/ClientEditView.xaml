@@ -34,7 +34,11 @@
 
         <Label Grid.Row="1" Grid.Column="0">Nome *</Label>
         <TextBox Grid.Row="1" Grid.Column="1" Margin="5,0,5,10" Text="{Binding SelectedClient.ClienteNome}" />
-
+        <Label Grid.Row="2" Grid.Column="0">NIF *</Label>
+        <TextBox Grid.Row="2" Grid.Column="1" Margin="5,0,5,10" Text="{Binding SelectedClient.ClienteNIF}" />
+        <Label Grid.Row="3" Grid.Column="0">Data Nascimento *</Label>
+        <Label Grid.Row="4" Grid.Column="0">Morada *</Label>
+        <Label Grid.Row="5" Grid.Column="0">Código Postal *</Label>
         <!-- Adicione outros controles conforme necessário para outros detalhes do cliente -->
 
 
