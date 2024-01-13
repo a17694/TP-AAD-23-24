@@ -8,6 +8,8 @@ public class ClientContact
 
     public string ContactoCliente { get; set; }
 
+    public TipoContacto TipoContacto { get; set; }
+
     public ClientContact() { }
 
 }

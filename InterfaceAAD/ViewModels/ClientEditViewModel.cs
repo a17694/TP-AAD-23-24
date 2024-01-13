@@ -12,6 +12,9 @@ public class ClientEditViewModel : BaseViewModel
 
     private Client _selectedClient;
     private List<TipoContacto> _tipoContacto;
+    private TipoContacto _selectedContactType;
+
+    public List<ClientContact> ClientContacts { get; set; }
 
 
     public Client SelectedClient
@@ -34,6 +37,17 @@ public class ClientEditViewModel : BaseViewModel
         }
     }
 
+    public TipoContacto SelectedContactType
+    {
+        get { return _selectedContactType; }
+        set
+        {
+            _selectedContactType = value;
+            OnPropertyChanged(nameof(SelectedContactType));
+        }
+    }
+
+
     #endregion
 
     #region Constructor
@@ -50,7 +64,23 @@ public class ClientEditViewModel : BaseViewModel
         // Get the selected client by NIF
         SelectedClient = clientRepository.GetById(NIF);
 
-         TipoContacto = (new ContactTypeRepository()).GetAll();
+        // TipoContacto = (new ContactTypeRepository()).GetAll();
+
+        ContactTypeRepository contactTypeRepository = new ContactTypeRepository();
+        List<TipoContacto> allContactTypes = contactTypeRepository.GetAll();
+
+        // Carregar contatos do cliente
+        ClientContacts = SelectedClient.ClientContacts;
+
+        // Associar os tipos de contato aos contatos do cliente
+        foreach (var contact in ClientContacts)
+        {
+            contact.TipoContacto = allContactTypes.FirstOrDefault(t => t.TpContactoID == contact.TipoContactoTpContactoID);
+        }
+
+        // Obter a lista de tipos de contato (se necessário)
+        TipoContacto = allContactTypes;
+
 
     }
 
