@@ -49,13 +49,22 @@
                 <DataGridTemplateColumn Header="Tipo de Contato">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <ComboBox ItemsSource="{Binding DataContext.TipoContacto, RelativeSource={RelativeSource AncestorType={x:Type Window}}}" 
+                            <ComboBox ItemsSource="{Binding TipoContactos, RelativeSource={RelativeSource AncestorType={x:Type Window}}}" 
                               SelectedItem="{Binding Tipo, Mode=TwoWay}" />
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
+                <!-- Segunda Coluna -->
+                <DataGridTemplateColumn Header="Contacto" Width="*">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <!-- Conteúdo da segunda coluna aqui -->
+                         </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
             </DataGrid.Columns>
         </DataGrid>
+
 
         <!-- Adicione outros controles conforme necessário para outros detalhes do cliente -->
 
