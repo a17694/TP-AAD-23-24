@@ -17,6 +17,7 @@ namespace InterfaceAAD.Views
         {
             InitializeComponent();
             DataContext = new ClientEditViewModel(NIF);
+
         }
 
         /// <summary>

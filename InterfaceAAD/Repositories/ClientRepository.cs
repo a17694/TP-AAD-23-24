@@ -1,5 +1,6 @@
 ﻿using System.Data;
 using System.Data.SqlClient;
+using System.Windows;
 using InterfaceAAD.Converters;
 using InterfaceAAD.Models.Entities;
 using InterfaceAAD.Models.Interfaces;
@@ -22,7 +23,7 @@ public class ClientRepository : BaseRepository, IBaseRepository<Client>
     {
         // Note: The logic below always returns false. Ensure you have the correct implementation for your needs.
         return false;
-
+        /*
         entity.ClientContacts.ForEach(contact =>
         {
             string query =
@@ -39,6 +40,7 @@ public class ClientRepository : BaseRepository, IBaseRepository<Client>
         });
 
         return false;
+        */
     }
 
     /// <summary>
@@ -66,10 +68,18 @@ public class ClientRepository : BaseRepository, IBaseRepository<Client>
             {
                 if (reader.Read())
                 {
+                    DateTime dataDb = (DateTime)reader["ClienteDataNasc"];
+
+
+
                     return new Client
                     {
                         ClienteNIF = (int)reader["ClienteNIF"],
-                        ClienteNome = reader["ClienteNome"].ToString()
+                        ClienteNome = (string)reader["ClienteNome"],
+                        ClienteDataNasc = new DateOnly(dataDb.Year,dataDb.Month,dataDb.Day),
+                        ClienteMorada = (string)reader["ClienteMorada"],
+                        CPCP = (string)reader["CPCP"]
+              
                     };
                 }
             }
@@ -90,21 +100,31 @@ public class ClientRepository : BaseRepository, IBaseRepository<Client>
         string query = "SELECT * FROM Cliente";
 
         using (SqlCommand command = new SqlCommand(query, _db))
+        try
         {
             using (SqlDataReader reader = command.ExecuteReader())
             {
                 while (reader.Read())
                 {
+                    DateTime dataDb = (DateTime)reader["ClienteDataNasc"];
                     Client client = new Client(Convert.ToInt32(reader["ClienteNIF"]))
                     {
                         // Optionally populate other properties here
-                        ClienteNome = (string)reader["ClienteNome"]
+                        ClienteNIF = (int)reader["ClienteNIF"],
+                        ClienteNome = (string)reader["ClienteNome"],
+                        ClienteDataNasc = new DateOnly(dataDb.Year, dataDb.Month, dataDb.Day),
+                        ClienteMorada = (string)reader["ClienteMorada"],
+                        CPCP = (string)reader["CPCP"]
                     };
 
                     clients.Add(client);
                 }
             }
         }
+        catch (Exception ex)
+        {
+                MessageBox.Show($"{ex}");
+            }
 
         return clients;
     }

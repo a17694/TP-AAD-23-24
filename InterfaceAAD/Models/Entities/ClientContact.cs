@@ -2,7 +2,12 @@
 
 public class ClientContact
 {
-    public int type { get; set; }
+    public int TipoContactoTpContactoID { get; set; }
     
-    public string contact { get; set; }
+    public int ClienteClienteNIF { get; set; }
+
+    public string ContactoCliente { get; set; }
+
+    public ClientContact() { }
+
 }

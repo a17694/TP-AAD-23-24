@@ -2,6 +2,7 @@
 using System.Windows;
 using System.Windows.Input;
 using InterfaceAAD.Repositories;
+using System.Windows.Controls;
 
 namespace InterfaceAAD.ViewModels;
 
@@ -10,6 +11,8 @@ public class ClientEditViewModel : BaseViewModel
     #region Properties
 
     private Client _selectedClient;
+    private TipoContacto _tipoContacto;
+
 
     public Client SelectedClient
     {
@@ -18,6 +21,16 @@ public class ClientEditViewModel : BaseViewModel
         {
             _selectedClient = value;
             OnPropertyChanged(nameof(SelectedClient));
+        }
+    }
+
+    public TipoContacto TipoContacto
+    {
+        get { return _tipoContacto; }
+        set 
+        { 
+            _tipoContacto = value;
+            OnPropertyChanged(nameof(TipoContacto));
         }
     }
 
@@ -36,8 +49,12 @@ public class ClientEditViewModel : BaseViewModel
 
         // Get the selected client by NIF
         SelectedClient = clientRepository.GetById(NIF);
-      
+
+        List<TipoContacto> typeContacts = (new ContactTypeRepository()).GetAll();
+
     }
+
+
 
     #endregion
 

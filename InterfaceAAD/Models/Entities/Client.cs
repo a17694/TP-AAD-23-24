@@ -14,6 +14,12 @@ public class Client
     /// Gets or sets the name of the client.
     /// </summary>
     public string ClienteNome { get; set; }
+
+    public DateOnly ClienteDataNasc {  get; set; }
+
+    public string ClienteMorada { get; set; }
+
+    public string CPCP { get; set; }
     
     public List<ClientContact> ClientContacts { get; set; }
     
@@ -25,10 +31,19 @@ public class Client
     /// </summary>
     /// <param name="clienteNif">The NIF (Tax Identification Number) of the client.</param>
     /// <param name="clienteNome">The name of the client (optional).</param>
-    public Client(int clienteNif, string clienteNome = null)
+    //public Client(int clienteNif, string clienteNome = null)
+    //{
+    //    ClienteNIF = clienteNif;
+    //    ClienteNome = clienteNome;
+    //}
+
+    public Client(int clienteNif, string clienteNome = null, DateOnly? clienteDataNasc = null, string clienteMorada = null, string cPCP = null )
     {
-        ClienteNIF = clienteNif;
+        ClienteNIF= clienteNif;
         ClienteNome = clienteNome;
+        ClienteDataNasc = clienteDataNasc.HasValue ? clienteDataNasc.Value : DateOnly.MinValue;
+        ClienteMorada = clienteMorada;
+        CPCP = cPCP;
     }
     
     
