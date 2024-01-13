@@ -68,8 +68,7 @@ public class ClientRepository : BaseRepository, IBaseRepository<Client>
             {
                 if (reader.Read())
                 {
-                   DateTime dataDb = (DateTime)reader["ClienteDataNasc"];
-
+                    DateTime dataDb = (DateTime)reader["ClienteDataNasc"];
 
 
                     return new Client
@@ -79,7 +78,6 @@ public class ClientRepository : BaseRepository, IBaseRepository<Client>
                         ClienteDataNasc = (DateTime)reader["ClienteDataNasc"],
                         ClienteMorada = (string)reader["ClienteMorada"],
                         CPCP = (string)reader["CPCP"]
-              
                     };
                 }
             }
@@ -100,29 +98,28 @@ public class ClientRepository : BaseRepository, IBaseRepository<Client>
         string query = "SELECT * FROM Cliente";
 
         using (SqlCommand command = new SqlCommand(query, _db))
-        try
-        {
-            using (SqlDataReader reader = command.ExecuteReader())
+            try
             {
-                while (reader.Read())
+                using (SqlDataReader reader = command.ExecuteReader())
                 {
-                    
-                    Client client = new Client(Convert.ToInt32(reader["ClienteNIF"]))
+                    while (reader.Read())
                     {
-                        // Optionally populate other properties here
-                        ClienteNIF = (int)reader["ClienteNIF"],
-                        ClienteNome = (string)reader["ClienteNome"],
-                        ClienteDataNasc = (DateTime)reader["ClienteDataNasc"],
-                        ClienteMorada = (string)reader["ClienteMorada"],
-                        CPCP = (string)reader["CPCP"]
-                    };
+                        Client client = new Client(Convert.ToInt32(reader["ClienteNIF"]))
+                        {
+                            // Optionally populate other properties here
+                            ClienteNIF = (int)reader["ClienteNIF"],
+                            ClienteNome = (string)reader["ClienteNome"],
+                            ClienteDataNasc = (DateTime)reader["ClienteDataNasc"],
+                            ClienteMorada = (string)reader["ClienteMorada"],
+                            CPCP = (string)reader["CPCP"]
+                        };
 
-                    clients.Add(client);
+                        clients.Add(client);
+                    }
                 }
             }
-        }
-        catch (Exception ex)
-        {
+            catch (Exception ex)
+            {
                 MessageBox.Show($"{ex}");
             }
 
