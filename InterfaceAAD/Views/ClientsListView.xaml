@@ -8,6 +8,6 @@
       Title="ClientsListView" Height="450" Width="800">
     <Grid>
 
-        <DataGrid Name="dataGridClientes" AutoGenerateColumns="True"  IsReadOnly="True" ItemsSource="{Binding Clients}"  MouseDoubleClick="EditClient_Click" />
+        <DataGrid Name="dataGridClientes" AutoGenerateColumns="True"  IsReadOnly="True" ItemsSource="{Binding Clients}" AutoGeneratingColumn="DataGrid_AutoGeneratingColumn" MouseDoubleClick="EditClient_Click" />
     </Grid>
 </Page>
