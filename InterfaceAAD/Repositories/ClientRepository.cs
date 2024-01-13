@@ -60,6 +60,8 @@ public class ClientRepository : BaseRepository, IBaseRepository<Client>
     /// <returns>The client entity if found; otherwise, an empty client.</returns>
     public Client GetById(int NIF)
     {
+        Client client = new Client();
+
         using (SqlCommand command = new SqlCommand("SELECT * FROM Cliente WHERE ClienteNIF = @NIF", _db))
         {
             command.Parameters.AddWithValue("@NIF", NIF);
@@ -68,10 +70,7 @@ public class ClientRepository : BaseRepository, IBaseRepository<Client>
             {
                 if (reader.Read())
                 {
-                    DateTime dataDb = (DateTime)reader["ClienteDataNasc"];
-
-
-                    return new Client
+                    client = new Client
                     {
                         ClienteNIF = (int)reader["ClienteNIF"],
                         ClienteNome = (string)reader["ClienteNome"],
@@ -82,9 +81,41 @@ public class ClientRepository : BaseRepository, IBaseRepository<Client>
                 }
             }
         }
+        
+        // Client Contacts
+        if (client.ClienteNIF != 0)
+        {
+            using (SqlCommand command =
+                   new SqlCommand(
+                       "SELECT ContactoCliente, TipoContactoTpContactoID FROM ContactoCliente WHERE ClienteClienteNIF = @NIF",
+                       _db))
+            {
+                command.Parameters.AddWithValue("@NIF", NIF);
+
+                using (SqlDataReader reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        if (string.IsNullOrEmpty((string)reader["ContactoCliente"]))
+                        {
+                            continue;
+                        }
+
+                        client.ClientContacts.Add(
+                            new ClientContact()
+                            {
+                                ClienteClienteNIF = NIF,
+                                TipoContactoTpContactoID = (int)reader["TipoContactoTpContactoID"],
+                                ContactoCliente = (string)reader["ContactoCliente"]
+                            }
+                        );
+                    }
+                }
+            }
+        }
 
         // Return an empty client if not found
-        return new Client();
+        return client;
     }
 
     /// <summary>
@@ -104,15 +135,13 @@ public class ClientRepository : BaseRepository, IBaseRepository<Client>
                 {
                     while (reader.Read())
                     {
-                        Client client = new Client(Convert.ToInt32(reader["ClienteNIF"]))
-                        {
-                            // Optionally populate other properties here
-                            ClienteNIF = (int)reader["ClienteNIF"],
-                            ClienteNome = (string)reader["ClienteNome"],
-                            ClienteDataNasc = (DateTime)reader["ClienteDataNasc"],
-                            ClienteMorada = (string)reader["ClienteMorada"],
-                            CPCP = (string)reader["CPCP"]
-                        };
+                        Client client = new Client(
+                            Convert.ToInt32(reader["ClienteNIF"]), 
+                            (string)reader["ClienteNome"], 
+                            (DateTime)reader["ClienteDataNasc"],
+                            (string)reader["ClienteMorada"],
+                            (string)reader["CPCP"]
+                        );
 
                         clients.Add(client);
                     }
