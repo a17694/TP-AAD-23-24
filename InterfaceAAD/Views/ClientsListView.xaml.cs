@@ -51,6 +51,23 @@ namespace InterfaceAAD.Views
             }
         }
 
+
+
+        private void DataGrid_AutoGeneratingColumn(object sender, DataGridAutoGeneratingColumnEventArgs e)
+        {
+            // Verifica se a coluna é para a propriedade ClienteDataNasc
+            if (e.PropertyName == "ClienteDataNasc")
+            {
+                // Cria uma nova coluna de texto e define o formato desejado
+                DataGridTextColumn textColumn = new DataGridTextColumn();
+                textColumn.Header = "ClienteDataNasc";
+                textColumn.Binding = new System.Windows.Data.Binding("ClienteDataNasc") { StringFormat = "dd/MM/yyyy" };
+
+                // Substitui a coluna gerada automaticamente pela personalizada
+                e.Column = textColumn;
+            }
+        }
+
         #endregion
     }
 }

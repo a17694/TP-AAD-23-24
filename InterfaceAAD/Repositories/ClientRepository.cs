@@ -68,7 +68,7 @@ public class ClientRepository : BaseRepository, IBaseRepository<Client>
             {
                 if (reader.Read())
                 {
-                    DateTime dataDb = (DateTime)reader["ClienteDataNasc"];
+                   DateTime dataDb = (DateTime)reader["ClienteDataNasc"];
 
 
 
@@ -76,7 +76,7 @@ public class ClientRepository : BaseRepository, IBaseRepository<Client>
                     {
                         ClienteNIF = (int)reader["ClienteNIF"],
                         ClienteNome = (string)reader["ClienteNome"],
-                        ClienteDataNasc = new DateOnly(dataDb.Year,dataDb.Month,dataDb.Day),
+                        ClienteDataNasc = (DateTime)reader["ClienteDataNasc"],
                         ClienteMorada = (string)reader["ClienteMorada"],
                         CPCP = (string)reader["CPCP"]
               
@@ -106,13 +106,13 @@ public class ClientRepository : BaseRepository, IBaseRepository<Client>
             {
                 while (reader.Read())
                 {
-                    DateTime dataDb = (DateTime)reader["ClienteDataNasc"];
+                    
                     Client client = new Client(Convert.ToInt32(reader["ClienteNIF"]))
                     {
                         // Optionally populate other properties here
                         ClienteNIF = (int)reader["ClienteNIF"],
                         ClienteNome = (string)reader["ClienteNome"],
-                        ClienteDataNasc = new DateOnly(dataDb.Year, dataDb.Month, dataDb.Day),
+                        ClienteDataNasc = (DateTime)reader["ClienteDataNasc"],
                         ClienteMorada = (string)reader["ClienteMorada"],
                         CPCP = (string)reader["CPCP"]
                     };

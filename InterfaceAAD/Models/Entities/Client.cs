@@ -15,7 +15,7 @@ public class Client
     /// </summary>
     public string ClienteNome { get; set; }
 
-    public DateOnly ClienteDataNasc {  get; set; }
+    public DateTime ClienteDataNasc {  get; set; }
 
     public string ClienteMorada { get; set; }
 
@@ -37,11 +37,11 @@ public class Client
     //    ClienteNome = clienteNome;
     //}
 
-    public Client(int clienteNif, string clienteNome = null, DateOnly? clienteDataNasc = null, string clienteMorada = null, string cPCP = null )
+    public Client(int clienteNif, string clienteNome = null, DateTime? clienteDataNasc = null, string clienteMorada = null, string cPCP = null )
     {
         ClienteNIF= clienteNif;
         ClienteNome = clienteNome;
-        ClienteDataNasc = clienteDataNasc.HasValue ? clienteDataNasc.Value : DateOnly.MinValue;
+        ClienteDataNasc = clienteDataNasc.HasValue ? clienteDataNasc.Value : DateTime.MinValue;
         ClienteMorada = clienteMorada;
         CPCP = cPCP;
     }

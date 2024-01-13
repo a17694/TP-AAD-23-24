@@ -3,6 +3,7 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:sys="clr-namespace:System;assembly=mscorlib"
       xmlns:local="clr-namespace:InterfaceAAD.Views"
       mc:Ignorable="d"
       d:DesignHeight="450" d:DesignWidth="800"
@@ -14,7 +15,7 @@
             <RowDefinition Height="2*" />
             <RowDefinition Height="*" />
             <RowDefinition Height="*" />
-            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
             <RowDefinition Height="*" />
             <RowDefinition Height="4*" />
@@ -37,7 +38,7 @@
         <Label Grid.Row="2" Grid.Column="0">NIF *</Label>
         <TextBox Grid.Row="2" Grid.Column="1" Margin="5,0,5,10" Text="{Binding SelectedClient.ClienteNIF}" />
         <Label Grid.Row="3" Grid.Column="0">Data Nascimento *</Label>
-        <TextBox Grid.Row="3" Grid.Column="1" Margin="5,0,5,10" Text="{Binding SelectedClient.ClienteDataNasc, StringFormat=\{0:dd/MM/yyyy\} }" />
+        <DatePicker Grid.Row="3" Grid.Column="1" Margin="5,0,5,10" SelectedDate="{Binding SelectedClient.ClienteDataNasc, StringFormat='dd/MM/yyyy'}" />
         <Label Grid.Row="4" Grid.Column="0">Morada *</Label>
         <TextBox Grid.Row="4" Grid.Column="1" Margin="5,0,5,10" Text="{Binding SelectedClient.ClienteMorada}" />
         <Label Grid.Row="5" Grid.Column="0">Código Postal *</Label>

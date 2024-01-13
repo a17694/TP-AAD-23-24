@@ -24,7 +24,7 @@ public class ClientEditViewModel : BaseViewModel
         }
     }
 
-    public TipoContacto TipoContacto
+    public TipoContacto TipoContacto 
     {
         get { return _tipoContacto; }
         set
