@@ -11,7 +11,7 @@ public class ClientEditViewModel : BaseViewModel
     #region Properties
 
     private Client _selectedClient;
-    private TipoContacto _tipoContacto;
+    private List<TipoContacto> _tipoContacto;
 
 
     public Client SelectedClient
@@ -24,7 +24,7 @@ public class ClientEditViewModel : BaseViewModel
         }
     }
 
-    public TipoContacto TipoContacto 
+    public List<TipoContacto> TipoContacto 
     {
         get { return _tipoContacto; }
         set
@@ -50,7 +50,7 @@ public class ClientEditViewModel : BaseViewModel
         // Get the selected client by NIF
         SelectedClient = clientRepository.GetById(NIF);
 
-        List<TipoContacto> typeContacts = (new ContactTypeRepository()).GetAll();
+         TipoContacto = (new ContactTypeRepository()).GetAll();
 
     }
 

@@ -44,25 +44,18 @@
         <Label Grid.Row="5" Grid.Column="0">Código Postal *</Label>
         <TextBox Grid.Row="5" Grid.Column="1" Margin="5,0,5,10" Text="{Binding SelectedClient.CPCP}" />
 
-        <DataGrid Grid.Row="6" Grid.Column="1" Name="myDataGrid" AutoGenerateColumns="False">
+        <DataGrid Grid.Row="6" Grid.Column="1" Name="myDataGrid" AutoGenerateColumns="False" ItemsSource="{Binding SelectedClient.ClientContacts}" CanUserAddRows="False">
             <DataGrid.Columns>
                 <!-- Coluna do ComboBox -->
-                <DataGridTemplateColumn Header="Tipo de Contato">
-                    <DataGridTemplateColumn.CellTemplate>
-                        <DataTemplate>
-                            <ComboBox ItemsSource="{Binding TipoContactos, RelativeSource={RelativeSource AncestorType={x:Type Window}}}" 
-                              SelectedItem="{Binding Tipo, Mode=TwoWay}" />
-                        </DataTemplate>
-                    </DataGridTemplateColumn.CellTemplate>
-                </DataGridTemplateColumn>
-                <!-- Segunda Coluna -->
-                <DataGridTemplateColumn Header="Contacto" Width="*">
-                    <DataGridTemplateColumn.CellTemplate>
-                        <DataTemplate>
-                            <!-- Conteúdo da segunda coluna aqui -->
-                         </DataTemplate>
-                    </DataGridTemplateColumn.CellTemplate>
-                </DataGridTemplateColumn>
+                <DataGridComboBoxColumn Header="Tipo de Contato" DisplayMemberPath="DescTpContacto" SelectedValueBinding="{Binding TipoContacto}" >
+                    <DataGridComboBoxColumn.ElementStyle>
+                        <Style TargetType="ComboBox">
+                            <Setter Property="ItemsSource" Value="{Binding DataContext.TipoContacto, RelativeSource={RelativeSource AncestorType={x:Type Window}}}" />
+                        </Style>
+                    </DataGridComboBoxColumn.ElementStyle>
+                </DataGridComboBoxColumn>
+                <!-- Coluna do Contato -->
+                <DataGridTextColumn Header="Contacto" Binding="{Binding ContactoCliente}" Width="*" />
             </DataGrid.Columns>
         </DataGrid>
 
