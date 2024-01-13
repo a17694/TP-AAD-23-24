@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 
-namespace InterfaceAAD.Repositories 
+namespace InterfaceAAD.Repositories
 {
     public class ContactTypeRepository : BaseRepository, IBaseRepository<TipoContacto>
     {
@@ -39,7 +39,6 @@ namespace InterfaceAAD.Repositories
                             {
                                 TpContactoID = (int)reader["TpContactoID"],
                                 DescTpContacto = (string)reader["DescTpContacto"]
-
                             };
 
                             typeContacts.Add(tipoContacto);
@@ -56,7 +55,8 @@ namespace InterfaceAAD.Repositories
 
         public TipoContacto GetById(int TpContactoID)
         {
-            using (SqlCommand command = new SqlCommand("SELECT * FROM TipoContacto WHERE TpContactoID = @TpContactoID", _db))
+            using (SqlCommand command =
+                   new SqlCommand("SELECT * FROM TipoContacto WHERE TpContactoID = @TpContactoID", _db))
             {
                 command.Parameters.AddWithValue("@TpContactoID", TpContactoID);
 
@@ -64,15 +64,15 @@ namespace InterfaceAAD.Repositories
                 {
                     if (reader.Read())
                     {
-                        return new TipoContacto 
-                        { 
+                        return new TipoContacto
+                        {
                             TpContactoID = (int)reader["TpContactoID"],
                             DescTpContacto = (string)reader["DescTpContacto"]
                         };
-
                     }
                 }
             }
+
             return new TipoContacto();
         }
     }

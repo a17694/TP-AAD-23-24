@@ -20,8 +20,8 @@ public class Client
     public string ClienteMorada { get; set; }
 
     public string CPCP { get; set; }
-    
-    public List<ClientContact> ClientContacts { get; set; }
+
+    public List<ClientContact> ClientContacts { get; set; } = new List<ClientContact>();
     
     public Client()
     {}
@@ -31,12 +31,6 @@ public class Client
     /// </summary>
     /// <param name="clienteNif">The NIF (Tax Identification Number) of the client.</param>
     /// <param name="clienteNome">The name of the client (optional).</param>
-    //public Client(int clienteNif, string clienteNome = null)
-    //{
-    //    ClienteNIF = clienteNif;
-    //    ClienteNome = clienteNome;
-    //}
-
     public Client(int clienteNif, string clienteNome = null, DateTime? clienteDataNasc = null, string clienteMorada = null, string cPCP = null )
     {
         ClienteNIF= clienteNif;
