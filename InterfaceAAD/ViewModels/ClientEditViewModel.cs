@@ -27,8 +27,8 @@ public class ClientEditViewModel : BaseViewModel
     public TipoContacto TipoContacto 
     {
         get { return _tipoContacto; }
-        set 
-        { 
+        set
+        {
             _tipoContacto = value;
             OnPropertyChanged(nameof(TipoContacto));
         }
