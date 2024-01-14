@@ -63,7 +63,7 @@
                     </TransformGroup>
                 </TextBox.RenderTransform>
             </TextBox>
-            <Button Content="&#xE109;" FontFamily="Segoe UI Symbol" FontSize="16" Command="{Binding AdicionarContatoCommand}" Click="Button_Click" Width="26" Height="25"/>
+            <Button Content="&#xE109;" FontFamily="Segoe UI Symbol" FontSize="16" Command="{Binding AdicionarContatoCommand}" Width="26" Height="25"/>
             <!-- Ajuste o valor de Width conforme necessário -->
         </StackPanel>
 
