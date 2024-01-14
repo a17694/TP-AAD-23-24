@@ -50,7 +50,7 @@
             <ComboBox ItemsSource="{Binding TipoContacto}" 
           DisplayMemberPath="DescTpContacto" 
           SelectedItem="{Binding SelectedContactType, Mode=TwoWay}" 
-          Width="80"
+          Width="60"
           Height="21" />
             <TextBlock Text="Novo Contato:" VerticalAlignment="Center" Margin="10,0,10,0" />
             <TextBox Text="{Binding NovoContato, Mode=TwoWay}" Width="200" Height="22" RenderTransformOrigin="0.5,0.5" >
