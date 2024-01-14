@@ -174,6 +174,13 @@ namespace InterfaceAAD.Repositories
 
         #endregion
 
+        #region Private Methods
+
+        /// <summary>
+        /// Updates an existing client entity in the database.
+        /// </summary>
+        /// <param name="client">The client entity to be updated.</param>
+        /// <param name="transaction">The SQL transaction.</param>
         private void UpdateClient(Client client, SqlTransaction transaction)
         {
             // Update the client
@@ -205,6 +212,11 @@ namespace InterfaceAAD.Repositories
             }
         }
 
+        /// <summary>
+        /// Inserts a new client entity into the database.
+        /// </summary>
+        /// <param name="client">The client entity to be inserted.</param>
+        /// <param name="transaction">The SQL transaction.</param>
         private void InsertClient(Client client, SqlTransaction transaction)
         {
             // Insert the client
@@ -230,6 +242,11 @@ namespace InterfaceAAD.Repositories
             }
         }
 
+        /// <summary>
+        /// Checks if a client with the specified NIF already exists in the database.
+        /// </summary>
+        /// <param name="clienteNIF">The NIF of the client to check.</param>
+        /// <returns>True if the client exists; otherwise, false.</returns>
         private bool CheckIfClientExists(int clienteNIF)
         {
             using (SqlCommand command = new SqlCommand("SELECT COUNT(*) FROM Cliente WHERE ClienteNIF = @NIF", _db))
@@ -239,5 +256,7 @@ namespace InterfaceAAD.Repositories
                 return count > 0;
             }
         }
+
+        #endregion
     }
 }
