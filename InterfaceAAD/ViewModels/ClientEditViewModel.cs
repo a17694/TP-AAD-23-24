@@ -87,12 +87,18 @@ public class ClientEditViewModel : BaseViewModel
 
         // Get the selected client by NIF
         SelectedClient = _clientRepository.GetById(NIF);
-
-        // TipoContacto = (new ContactTypeRepository()).GetAll();
+        
 
         ContactTypeRepository contactTypeRepository = new ContactTypeRepository();
-        List<TipoContacto> allContactTypes = contactTypeRepository.GetAll();
+        TipoContacto = contactTypeRepository.GetAll();
+        
+        GetClientContactName();
+        
+    }
 
+
+    public void GetClientContactName()
+    {
         // Carregar contatos do cliente
         ClientContacts = SelectedClient.ClientContacts;
 
@@ -100,11 +106,8 @@ public class ClientEditViewModel : BaseViewModel
         foreach (var contact in ClientContacts)
         {
             contact.TipoContacto =
-                allContactTypes.FirstOrDefault(t => t.TpContactoID == contact.TipoContactoTpContactoID);
+                TipoContacto.FirstOrDefault(t => t.TpContactoID == contact.TipoContactoTpContactoID);
         }
-
-        // Obter a lista de tipos de contato (se necessário)
-        TipoContacto = allContactTypes;
     }
 
     private void AdicionarContato(object parameter)
@@ -162,6 +165,7 @@ public class ClientEditViewModel : BaseViewModel
     {
         // Lógica para cancelar as alterações
         SelectedClient = _clientRepository.GetById(SelectedClient.ClienteNIF);
+        GetClientContactName();
     }
 
     #endregion
