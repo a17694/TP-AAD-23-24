@@ -64,7 +64,6 @@
                 </TextBox.RenderTransform>
             </TextBox>
             <Button Content="&#xE109;" FontFamily="Segoe UI Symbol" FontSize="16" Command="{Binding AdicionarContatoCommand}" Width="26" Height="25"/>
-            <!-- Ajuste o valor de Width conforme necessário -->
         </StackPanel>
 
         <DataGrid Grid.Row="6" Name="myDataGrid" AutoGenerateColumns="False" ItemsSource="{Binding SelectedClient.ClientContacts}" CanUserAddRows="False" Margin="150,30,9,0" VerticalAlignment="Top" Grid.ColumnSpan="2" Grid.RowSpan="2">
@@ -79,13 +78,29 @@
                 </DataGridTemplateColumn>
                 <!-- Coluna do Contato (editável) -->
                 <DataGridTextColumn Header="Contato" Binding="{Binding ContactoCliente, Mode=TwoWay}" Width="*"/>
+                <!-- Coluna do Remover -->
+                <DataGridTemplateColumn Header="Tipo de Contato">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}"
+                                    Width="30"
+                                    Height="30"
+                                    HorizontalContentAlignment="Center"
+                                    VerticalContentAlignment="Center"
+                                    Background="Red"
+                                    Command="{Binding ClientContactRemoveCommand}">
+                                <Button.Content>
+                                    <TextBlock Text="X" FontSize="16" />
+                                </Button.Content>
+                            </Button>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
             </DataGrid.Columns>
         </DataGrid>
 
 
         <!-- Adicione outros controles conforme necessário para outros detalhes do cliente -->
-
-
         <StackPanel Orientation="Horizontal" Grid.Row="9" Grid.Column="1">
             <Button Width="150" Content="Voltar" Click="BackButton_Click" Margin="5" />
             <Button Width="150" Content="Cancelar" Command="{Binding CancelCommand}" Margin="5" />
