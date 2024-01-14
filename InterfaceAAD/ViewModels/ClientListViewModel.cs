@@ -1,6 +1,9 @@
 ﻿using System.ComponentModel;
 using System.Data;
+using System.Windows.Navigation;
+using System.Windows;
 using InterfaceAAD.Repositories;
+using InterfaceAAD.Views;
 
 namespace InterfaceAAD.ViewModels;
 
@@ -43,4 +46,9 @@ public class ClientListViewModel : BaseViewModel
         ClientRepository clientRepository = new ClientRepository();
         Clients = await clientRepository.GetAllClientsAsDataTable();
     }
+
+  
+
+
+
 }
