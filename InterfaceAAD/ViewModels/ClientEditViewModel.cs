@@ -121,6 +121,7 @@ public class ClientEditViewModel : BaseViewModel
         // Criar um novo contato
         ClientContact novoContato = new ClientContact
         {
+            ClienteClienteNIF = SelectedClient.ClienteNIF,
             TipoContactoTpContactoID = SelectedContactType.TpContactoID,
             ContactoCliente = NovoContato
         };
