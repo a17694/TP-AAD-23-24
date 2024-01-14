@@ -158,7 +158,10 @@ public class ClientEditViewModel : BaseViewModel
 
     private void Save(object parameter)
     {
-        _clientRepository.Save(SelectedClient);
+        if (_clientRepository.Save(SelectedClient))
+        {
+            MessageBox.Show($"{SelectedClient.ClienteNome} Os seus dados foram guardados com sucesso!");
+        }
     }
 
     private void Cancel(object parameter)

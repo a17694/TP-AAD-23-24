@@ -47,12 +47,13 @@ namespace InterfaceAAD.Repositories
 
                 // Commit the transaction if everything goes without errors
                 transaction.Commit();
+                return true;
             }
             catch (Exception ex)
             {
                 // In case of error, rollback the transaction
                 transaction.Rollback();
-                Console.WriteLine("Error during transaction: " + ex.Message);
+                MessageBox.Show($"Error during transaction: {ex.Message}");
             }
 
             return false;
@@ -185,7 +186,7 @@ namespace InterfaceAAD.Repositories
             }
 
             // Remove all existing contacts of the client
-            using (SqlCommand command = new SqlCommand("DELETE FROM ClienteContacto WHERE ClienteNIF = @NIF", _db, transaction))
+            using (SqlCommand command = new SqlCommand("DELETE FROM ContactoCliente WHERE ClienteClienteNIF = @NIF", _db, transaction))
             {
                 command.Parameters.AddWithValue("@NIF", client.ClienteNIF);
                 command.ExecuteNonQuery();
@@ -194,12 +195,11 @@ namespace InterfaceAAD.Repositories
             // Insert the new contacts of the client
             foreach (var contact in client.ClientContacts)
             {
-                using (SqlCommand command = new SqlCommand("INSERT INTO ClienteContacto (ClienteNIF, Tipo, Contacto) VALUES (@NIF, @Tipo, @Contacto)", _db, transaction))
+                using (SqlCommand command = new SqlCommand("INSERT INTO ContactoCliente (ContactoCliente, ClienteClienteNIF, TipoContactoTpContactoID) VALUES (@Contacto, @NIF, @Tipo)", _db, transaction))
                 {
+                    command.Parameters.AddWithValue("@Contacto", contact.ContactoCliente);
                     command.Parameters.AddWithValue("@NIF", client.ClienteNIF);
                     command.Parameters.AddWithValue("@Tipo", contact.TipoContactoTpContactoID);
-                    command.Parameters.AddWithValue("@Contacto", contact.ContactoCliente);
-
                     command.ExecuteNonQuery();
                 }
             }
@@ -219,11 +219,11 @@ namespace InterfaceAAD.Repositories
             // Insert the contacts of the client
             foreach (var contact in client.ClientContacts)
             {
-                using (SqlCommand command = new SqlCommand("INSERT INTO ClienteContacto (ClienteNIF, Tipo, Contacto) VALUES (@NIF, @Tipo, @Contacto)", _db, transaction))
+                using (SqlCommand command = new SqlCommand("INSERT INTO ContactoCliente (ContactoCliente, ClienteClienteNIF, TipoContactoTpContactoID) VALUES (@Contacto, @NIF, @Tipo)", _db, transaction))
                 {
+                    command.Parameters.AddWithValue("@Contacto", contact.ContactoCliente);
                     command.Parameters.AddWithValue("@NIF", client.ClienteNIF);
                     command.Parameters.AddWithValue("@Tipo", contact.TipoContactoTpContactoID);
-                    command.Parameters.AddWithValue("@Contacto", contact.ContactoCliente);
 
                     command.ExecuteNonQuery();
                 }
