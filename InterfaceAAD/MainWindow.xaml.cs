@@ -40,8 +40,8 @@ namespace InterfaceAAD
                     ContentFrame.Navigate(new ClientsListView());
                     break;
 
-                case "Outra Página":
-                    ContentFrame.Navigate(new OutraPagina());
+                case "Propriedades":
+                    ContentFrame.Navigate(new PropertyListView());
                     break;
             }
         }
