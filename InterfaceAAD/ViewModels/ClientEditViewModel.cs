@@ -12,6 +12,7 @@ public class ClientEditViewModel : BaseViewModel
 {
     #region Properties
 
+    private ClientRepository _clientRepository;
     private Client _selectedClient;
     private List<TipoContacto> _tipoContacto;
     private TipoContacto _selectedContactType;
@@ -51,7 +52,7 @@ public class ClientEditViewModel : BaseViewModel
         }
     }
 
-    public List<TipoContacto> TipoContacto 
+    public List<TipoContacto> TipoContacto
     {
         get { return _tipoContacto; }
         set
@@ -71,7 +72,6 @@ public class ClientEditViewModel : BaseViewModel
         }
     }
 
-
     #endregion
 
     #region Constructor
@@ -83,29 +83,31 @@ public class ClientEditViewModel : BaseViewModel
     public ClientEditViewModel(int NIF)
     {
         // Initialize the ClientRepository
-        ClientRepository clientRepository = new ClientRepository();
+        _clientRepository = new ClientRepository();
 
         // Get the selected client by NIF
-        SelectedClient = clientRepository.GetById(NIF);
-
-        // TipoContacto = (new ContactTypeRepository()).GetAll();
+        SelectedClient = _clientRepository.GetById(NIF);
+        
 
         ContactTypeRepository contactTypeRepository = new ContactTypeRepository();
-        List<TipoContacto> allContactTypes = contactTypeRepository.GetAll();
+        TipoContacto = contactTypeRepository.GetAll();
+        
+        GetClientContactName();
+        
+    }
 
+
+    public void GetClientContactName()
+    {
         // Carregar contatos do cliente
         ClientContacts = SelectedClient.ClientContacts;
 
         // Associar os tipos de contato aos contatos do cliente
         foreach (var contact in ClientContacts)
         {
-            contact.TipoContacto = allContactTypes.FirstOrDefault(t => t.TpContactoID == contact.TipoContactoTpContactoID);
+            contact.TipoContacto =
+                TipoContacto.FirstOrDefault(t => t.TpContactoID == contact.TipoContactoTpContactoID);
         }
-
-        // Obter a lista de tipos de contato (se necessário)
-        TipoContacto = allContactTypes;
-
-
     }
 
     private void AdicionarContato(object parameter)
@@ -139,11 +141,7 @@ public class ClientEditViewModel : BaseViewModel
 
 
         view.Refresh();
-
-      
     }
-
-
 
     #endregion
 
@@ -160,15 +158,17 @@ public class ClientEditViewModel : BaseViewModel
 
     private void Save(object parameter)
     {
-        MessageBox.Show("Save Click");
-        // Lógica para salvar as alterações no cliente
-        // Exemplo: clientRepository.Save(SelectedClient);
+        if (_clientRepository.Save(SelectedClient))
+        {
+            MessageBox.Show($"{SelectedClient.ClienteNome} Os seus dados foram guardados com sucesso!");
+        }
     }
 
     private void Cancel(object parameter)
     {
         // Lógica para cancelar as alterações
-        // Exemplo: SelectedClient = clientRepository.GetClientById(SelectedClient.Id);
+        SelectedClient = _clientRepository.GetById(SelectedClient.ClienteNIF);
+        GetClientContactName();
     }
 
     #endregion
