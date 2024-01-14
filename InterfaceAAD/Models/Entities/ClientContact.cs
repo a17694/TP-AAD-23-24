@@ -1,6 +1,6 @@
 ﻿namespace InterfaceAAD.Models.Entities;
 
-public class ClientContact
+public class ClientContact 
 {
     public int TipoContactoTpContactoID { get; set; }
     
