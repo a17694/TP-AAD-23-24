@@ -14,43 +14,38 @@ public class ClientRepository : BaseRepository, IBaseRepository<Client>
 {
     #region Public Methods
 
-    /// <summary>
-    /// Adds a new client entity to the database.
-    /// </summary>
-    /// <param name="entity">The client entity to add.</param>
-    /// <returns>True if the addition is successful; otherwise, false.</returns>
-    public bool Add(Client entity)
+    public bool Save(Client client)
     {
-        // Note: The logic below always returns false. Ensure you have the correct implementation for your needs.
-        return false;
-        /*
-        entity.ClientContacts.ForEach(contact =>
+        // Verificar se o cliente já existe
+        bool clientExists = CheckIfClientExists(client.ClienteNIF);
+
+        // Inicia a transação
+        SqlTransaction transaction = _db.BeginTransaction();
+
+        try
         {
-            string query =
-                "INSERT INTO ClienteContacto (ClienteNIF, Tipo, Contacto) VALUES (@ClienteNIF, @Tipo, @Contacto)";
-
-            using (SqlCommand command = new SqlCommand(query, _db))
+            if (clientExists)
             {
-                command.Parameters.AddWithValue("@ClienteNIF", entity.ClienteNIF);
-                command.Parameters.AddWithValue("@Tipo", contact.type);
-                command.Parameters.AddWithValue("@Contacto", contact.contact);
-
-                command.ExecuteNonQuery();
+                // Atualizar o cliente se ele já existir
+                UpdateClient(client, transaction);
             }
-        });
+            else
+            {
+                // Inserir o cliente se ele não existir
+                InsertClient(client, transaction);
+            }
+
+            // Commit da transação se tudo ocorrer sem erros
+            transaction.Commit();
+        }
+        catch (Exception ex)
+        {
+            // Em caso de erro, desfaz a transação
+            transaction.Rollback();
+            Console.WriteLine("Erro durante a transação: " + ex.Message);
+        }
 
         return false;
-        */
-    }
-
-    /// <summary>
-    /// Edits an existing client entity in the database.
-    /// </summary>
-    /// <param name="entity">The client entity to edit.</param>
-    /// <returns>True if the editing is successful; otherwise, false.</returns>
-    public bool Edit(Client entity)
-    {
-        throw new NotImplementedException();
     }
 
     /// <summary>
@@ -81,7 +76,7 @@ public class ClientRepository : BaseRepository, IBaseRepository<Client>
                 }
             }
         }
-        
+
         // Client Contacts
         if (client.ClienteNIF != 0)
         {
@@ -136,8 +131,8 @@ public class ClientRepository : BaseRepository, IBaseRepository<Client>
                     while (reader.Read())
                     {
                         Client client = new Client(
-                            Convert.ToInt32(reader["ClienteNIF"]), 
-                            (string)reader["ClienteNome"], 
+                            Convert.ToInt32(reader["ClienteNIF"]),
+                            (string)reader["ClienteNome"],
                             (DateTime)reader["ClienteDataNasc"],
                             (string)reader["ClienteMorada"],
                             (string)reader["CPCP"]
@@ -167,4 +162,81 @@ public class ClientRepository : BaseRepository, IBaseRepository<Client>
     }
 
     #endregion
+
+
+    private void UpdateClient(Client client, SqlTransaction transaction)
+    {
+        // Atualizar o cliente
+        using (SqlCommand command = new SqlCommand("UPDATE Cliente SET ClienteNome = @Nome WHERE ClienteNIF = @NIF",
+                   _db, transaction))
+        {
+            command.Parameters.AddWithValue("@NIF", client.ClienteNIF);
+            command.Parameters.AddWithValue("@Nome", client.ClienteNome);
+
+            command.ExecuteNonQuery();
+        }
+
+        // Remover todos os contatos existentes do cliente
+        using (SqlCommand command =
+               new SqlCommand("DELETE FROM ClienteContacto WHERE ClienteNIF = @NIF", _db, transaction))
+        {
+            command.Parameters.AddWithValue("@NIF", client.ClienteNIF);
+            command.ExecuteNonQuery();
+        }
+
+        // Inserir os novos contatos do cliente
+        foreach (var contact in client.ClientContacts)
+        {
+            using (SqlCommand command =
+                   new SqlCommand(
+                       "INSERT INTO ClienteContacto (ClienteNIF, Tipo, Contacto) VALUES (@NIF, @Tipo, @Contacto)", _db,
+                       transaction))
+            {
+                command.Parameters.AddWithValue("@NIF", client.ClienteNIF);
+                command.Parameters.AddWithValue("@Tipo", contact.TipoContactoTpContactoID);
+                command.Parameters.AddWithValue("@Contacto", contact.ContactoCliente);
+
+                command.ExecuteNonQuery();
+            }
+        }
+    }
+
+    private void InsertClient(Client client, SqlTransaction transaction)
+    {
+        // Inserir o cliente
+        using (SqlCommand command = new SqlCommand("INSERT INTO Cliente (ClienteNIF, ClienteNome) VALUES (@NIF, @Nome)",
+                   _db, transaction))
+        {
+            command.Parameters.AddWithValue("@NIF", client.ClienteNIF);
+            command.Parameters.AddWithValue("@Nome", client.ClienteNome);
+
+            command.ExecuteNonQuery();
+        }
+
+        // Inserir os contatos do cliente
+        foreach (var contact in client.ClientContacts)
+        {
+            using (SqlCommand command =
+                   new SqlCommand(
+                       "INSERT INTO ClienteContacto (ClienteNIF, Tipo, Contacto) VALUES (@NIF, @Tipo, @Contacto)", _db,
+                       transaction))
+            {
+                command.Parameters.AddWithValue("@NIF", client.ClienteNIF);
+                command.Parameters.AddWithValue("@Tipo", contact.TipoContactoTpContactoID);
+                command.Parameters.AddWithValue("@Contacto", contact.ContactoCliente);
+
+                command.ExecuteNonQuery();
+            }
+        }
+    }
+
+    private bool CheckIfClientExists(int clienteNIF)
+    {
+        using (SqlCommand command = new SqlCommand("SELECT COUNT(*) FROM Cliente WHERE ClienteNIF = @NIF", _db))
+        {
+            command.Parameters.AddWithValue("@NIF", clienteNIF);
+            int count = (int)command.ExecuteScalar();
+            return count > 0;
+        }
+    }
 }

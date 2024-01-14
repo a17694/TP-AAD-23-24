@@ -12,16 +12,6 @@ namespace InterfaceAAD.Repositories
 {
     public class ContactTypeRepository : BaseRepository, IBaseRepository<TipoContacto>
     {
-        public bool Add(TipoContacto entity)
-        {
-            throw new NotImplementedException();
-        }
-
-        public bool Edit(TipoContacto entity)
-        {
-            throw new NotImplementedException();
-        }
-
         public List<TipoContacto> GetAll()
         {
             List<TipoContacto> typeContacts = new List<TipoContacto>();
@@ -51,6 +41,11 @@ namespace InterfaceAAD.Repositories
                 }
 
             return typeContacts;
+        }
+
+        public bool Save(TipoContacto entity)
+        {
+            throw new NotImplementedException();
         }
 
         public TipoContacto GetById(int TpContactoID)

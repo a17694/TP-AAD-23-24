@@ -160,9 +160,9 @@ public class ClientEditViewModel : BaseViewModel
 
     private void Save(object parameter)
     {
-        MessageBox.Show("Save Click");
         // Lógica para salvar as alterações no cliente
-        // Exemplo: clientRepository.Save(SelectedClient);
+        ClientRepository clientRepository = new ClientRepository();
+        clientRepository.Save(SelectedClient);
     }
 
     private void Cancel(object parameter)
