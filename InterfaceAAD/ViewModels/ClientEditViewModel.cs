@@ -3,6 +3,8 @@ using System.Windows;
 using System.Windows.Input;
 using InterfaceAAD.Repositories;
 using System.Windows.Controls;
+using System.ComponentModel;
+using System.Windows.Data;
 
 namespace InterfaceAAD.ViewModels;
 
@@ -11,8 +13,33 @@ public class ClientEditViewModel : BaseViewModel
     #region Properties
 
     private Client _selectedClient;
-    private TipoContacto _tipoContacto;
+    private List<TipoContacto> _tipoContacto;
+    private TipoContacto _selectedContactType;
+    private string _novoContato;
+    private string _novoContatoTipo;
 
+    public List<ClientContact> ClientContacts { get; set; }
+
+
+    public string NovoContatoTipo
+    {
+        get { return _novoContatoTipo; }
+        set
+        {
+            _novoContatoTipo = value;
+            OnPropertyChanged(nameof(NovoContatoTipo));
+        }
+    }
+
+    public string NovoContato
+    {
+        get { return _novoContato; }
+        set
+        {
+            _novoContato = value;
+            OnPropertyChanged(nameof(NovoContato));
+        }
+    }
 
     public Client SelectedClient
     {
@@ -24,7 +51,7 @@ public class ClientEditViewModel : BaseViewModel
         }
     }
 
-    public TipoContacto TipoContacto 
+    public List<TipoContacto> TipoContacto 
     {
         get { return _tipoContacto; }
         set
@@ -33,6 +60,17 @@ public class ClientEditViewModel : BaseViewModel
             OnPropertyChanged(nameof(TipoContacto));
         }
     }
+
+    public TipoContacto SelectedContactType
+    {
+        get { return _selectedContactType; }
+        set
+        {
+            _selectedContactType = value;
+            OnPropertyChanged(nameof(SelectedContactType));
+        }
+    }
+
 
     #endregion
 
@@ -50,8 +88,59 @@ public class ClientEditViewModel : BaseViewModel
         // Get the selected client by NIF
         SelectedClient = clientRepository.GetById(NIF);
 
-        List<TipoContacto> typeContacts = (new ContactTypeRepository()).GetAll();
+        // TipoContacto = (new ContactTypeRepository()).GetAll();
 
+        ContactTypeRepository contactTypeRepository = new ContactTypeRepository();
+        List<TipoContacto> allContactTypes = contactTypeRepository.GetAll();
+
+        // Carregar contatos do cliente
+        ClientContacts = SelectedClient.ClientContacts;
+
+        // Associar os tipos de contato aos contatos do cliente
+        foreach (var contact in ClientContacts)
+        {
+            contact.TipoContacto = allContactTypes.FirstOrDefault(t => t.TpContactoID == contact.TipoContactoTpContactoID);
+        }
+
+        // Obter a lista de tipos de contato (se necessário)
+        TipoContacto = allContactTypes;
+
+
+    }
+
+    private void AdicionarContato(object parameter)
+    {
+        if (SelectedContactType == null || string.IsNullOrEmpty(NovoContato))
+        {
+            MessageBox.Show("Por favor, selecione um tipo de contato e insira um novo contato.");
+            return;
+        }
+
+        // Criar um novo contato
+        ClientContact novoContato = new ClientContact
+        {
+            TipoContactoTpContactoID = SelectedContactType.TpContactoID,
+            ContactoCliente = NovoContato
+        };
+
+        // Associar o tipo de contato ao novo contato
+        novoContato.TipoContacto = SelectedContactType;
+
+        // Adicionar o novo contato à coleção e ao DataGrid
+        SelectedClient.ClientContacts.Add(novoContato);
+
+        OnPropertyChanged(nameof(ClientContacts));
+
+        // Limpar os campos após adicionar o novo contato
+        NovoContatoTipo = null;
+        NovoContato = null;
+
+        ICollectionView view = CollectionViewSource.GetDefaultView(SelectedClient.ClientContacts);
+
+
+        view.Refresh();
+
+      
     }
 
 
@@ -63,6 +152,7 @@ public class ClientEditViewModel : BaseViewModel
     public ICommand SaveCommand => new RelayCommand(Save);
     public ICommand CancelCommand => new RelayCommand(Cancel);
 
+    public ICommand AdicionarContatoCommand => new RelayCommand(AdicionarContato);
 
     #endregion
 
