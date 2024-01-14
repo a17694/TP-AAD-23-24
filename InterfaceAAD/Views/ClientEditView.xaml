@@ -79,7 +79,7 @@
                 <!-- Coluna do Contato (editável) -->
                 <DataGridTextColumn Header="Contato" Binding="{Binding ContactoCliente, Mode=TwoWay}" Width="*"/>
                 <!-- Coluna do Remover -->
-                <DataGridTemplateColumn Header="Tipo de Contato">
+                <DataGridTemplateColumn Header="Remover">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <Button Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}"
