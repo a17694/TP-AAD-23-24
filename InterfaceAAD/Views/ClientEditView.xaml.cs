@@ -16,12 +16,9 @@ namespace InterfaceAAD.Views
         public ClientEditView(int NIF)
         {
             InitializeComponent();
-            DataContext = new ClientEditViewModel(NIF);
+            DataContext = new ClientEditViewModel(NavigationService, NIF);
 
         }
-
-   
-
 
         /// <summary>
         /// Handles the click event of the back button.
