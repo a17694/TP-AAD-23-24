@@ -15,7 +15,7 @@
         <!-- Menu Lateral -->
         <ListBox Name="MenuList" Grid.Column="0" SelectionChanged="MenuList_SelectionChanged">
             <ListBoxItem Content="Clientes" Selected="ListBoxItem_Selected"/>
-            <ListBoxItem Content="Outra Página"/>
+            <ListBoxItem Content="Propriedades"/>
         </ListBox>
 
         <!-- Conteúdo da Página -->
