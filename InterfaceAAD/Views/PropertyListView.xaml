@@ -6,8 +6,23 @@
       xmlns:local="clr-namespace:InterfaceAAD.Views"
       mc:Ignorable="d"
       Title="PropertyListView" Height="450" Width="800">
+
     <Grid>
-        <DataGrid Name="dataGridProperties" AutoGenerateColumns="true" IsReadOnly="True" ItemsSource="{Binding Properties}">
+
+
+
+
+
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+
+
+
+
+        <DataGrid  Grid.Row="1" Grid.Column="0" Name="dataGridProperties" AutoGenerateColumns="true" IsReadOnly="True" ItemsSource="{Binding Properties}">
             <DataGrid.CellStyle>
                 <Style TargetType="DataGridCell">
                     <Style.Triggers>
@@ -21,7 +36,7 @@
                             <Setter Property="Background" Value="Orange"/>
                         </DataTrigger>
                         <DataTrigger Binding="{Binding Estado}" Value="Vendida">
-                            <Setter Property="Background" Value="BlueViolet"/>
+                            <Setter Property="Background" Value="CadetBlue"/>
                         </DataTrigger>
                         <!-- Adicione mais DataTriggers conforme necessário -->
                     </Style.Triggers>

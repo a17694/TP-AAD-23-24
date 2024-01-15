@@ -70,6 +70,7 @@ namespace InterfaceAAD.Repositories
         }
 
 
+
         public Task<DataTable> GetAllPropertiesAsDataTable()
         {
             List<Property> properties = GetAll();
