@@ -31,10 +31,5 @@ namespace InterfaceAAD.Views
         {
             NavigationService?.GoBack();
         }
-
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
     }
 }

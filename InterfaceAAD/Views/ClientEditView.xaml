@@ -5,9 +5,14 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:sys="clr-namespace:System;assembly=mscorlib"
       xmlns:local="clr-namespace:InterfaceAAD.Views"
+      xmlns:vm="clr-namespace:InterfaceAAD.ViewModels"
       mc:Ignorable="d"
       d:DesignHeight="450" d:DesignWidth="850"
       Title="TestePagina">
+    
+    <Page.DataContext>
+        <vm:ClientEditViewModel />
+    </Page.DataContext>
 
     <Grid Margin="10">
 
@@ -88,7 +93,9 @@
                                     HorizontalContentAlignment="Center"
                                     VerticalContentAlignment="Center"
                                     Background="Red"
-                                    Command="{Binding ClientContactRemoveCommand}">
+                                    Command="{Binding DataContext.RemoverContatoCommand, ElementName=myDataGrid}"
+                                    CommandParameter="{Binding ElementName=myDataGrid, Path=SelectedItem}">
+                                
                                 <Button.Content>
                                     <TextBlock Text="X" FontSize="16" />
                                 </Button.Content>
