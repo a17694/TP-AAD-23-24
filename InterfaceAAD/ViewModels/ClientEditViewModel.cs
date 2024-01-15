@@ -109,6 +109,21 @@ public class ClientEditViewModel : BaseViewModel
         }
     }
 
+    #endregion
+
+    #region ICommand Implementation
+
+    public ICommand SaveCommand => new RelayCommand(Save);
+    public ICommand CancelCommand => new RelayCommand(Cancel);
+
+    public ICommand AdicionarContatoCommand => new RelayCommand(AdicionarContato);
+
+    public ICommand RemoverContatoCommand => new RelayCommand(RemoverContato);
+
+    #endregion
+
+    #region Private Methods
+    
     private void AdicionarContato(object parameter)
     {
         if (SelectedContactType == null || string.IsNullOrEmpty(NovoContato))
@@ -160,21 +175,6 @@ public class ClientEditViewModel : BaseViewModel
             }
         }
     }
-
-    #endregion
-
-    #region ICommand Implementation
-
-    public ICommand SaveCommand => new RelayCommand(Save);
-    public ICommand CancelCommand => new RelayCommand(Cancel);
-
-    public ICommand AdicionarContatoCommand => new RelayCommand(AdicionarContato);
-
-    public ICommand RemoverContatoCommand => new RelayCommand(RemoverContato);
-
-    #endregion
-
-    #region Private Methods
 
     private void Save(object parameter)
     {
