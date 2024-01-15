@@ -8,6 +8,7 @@
       Title="ClientsListView" Height="450" Width="800">
     <Grid>
         <DataGrid Name="dataGridClientes" AutoGenerateColumns="True"  IsReadOnly="True" ItemsSource="{Binding Clients}" AutoGeneratingColumn="DataGrid_AutoGeneratingColumn" MouseDoubleClick="EditClient_Click" />
+
         <Grid>
             <Button Content="Adicionar Cliente" Click="AdicionarCliente_Click" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="585,366,0,0" RenderTransformOrigin="-0.175,-0.943" />
         </Grid>

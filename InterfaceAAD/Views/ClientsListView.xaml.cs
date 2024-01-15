@@ -67,6 +67,13 @@ namespace InterfaceAAD.Views
                 // Substitui a coluna gerada automaticamente pela personalizada
                 e.Column = textColumn;
             }
+
+
+            if (e.PropertyName == "ClientContacts")
+            {
+                e.Cancel = true; 
+            }
+            
         }
 
         private void AdicionarCliente_Click(object sender, RoutedEventArgs e)

@@ -8,10 +8,10 @@ Relatório em que à terceira fase do trabalho se adiciona um novo capítulo com
 
 Esta interface deverá incluir as seguintes funcionalidades:
 
-- [ ] Introdução de dados em várias tabelas em simultâneo (exemplo: inserção de um cliente com um ou vários contactos.)
-- [ ] Alteração de dados;
+- [x] Introdução de dados em várias tabelas em simultâneo (exemplo: inserção de um cliente com um ou vários contactos.)
+- [x] Alteração de dados;
 - [ ] Eliminação de dados;
-- [ ] Uma query elaborada a partir de várias tabelas;
+- [x] Uma query elaborada a partir de várias tabelas;
 - [x] 1 Stored Procedure
 
 Deverão fazer a apresentação da aplicação desenvolvida até ao final do semestre.

@@ -52,7 +52,7 @@
         <Label Grid.Row="5" Grid.Column="0" Margin="0,30,0,30" Grid.RowSpan="3">Adicionar Contacto*</Label>
         <StackPanel Grid.Row="5" Grid.Column="1" Orientation="Horizontal" Margin="5,26,0,4" Grid.RowSpan="2">
             <TextBlock Text="Selecionar Tipo de Contato:" VerticalAlignment="Center" Margin="0,0,10,0" />
-            <ComboBox ItemsSource="{Binding TipoContacto}" 
+            <ComboBox ItemsSource="{Binding TipoContactoFiltro}" 
           DisplayMemberPath="DescTpContacto" 
           SelectedItem="{Binding SelectedContactType, Mode=TwoWay}" 
           Width="60"
@@ -109,9 +109,10 @@
 
         <!-- Adicione outros controles conforme necessário para outros detalhes do cliente -->
         <StackPanel Orientation="Horizontal" Grid.Row="9" Grid.Column="1">
-            <Button Width="150" Content="Voltar" Click="BackButton_Click" Margin="5" />
-            <Button Width="150" Content="Cancelar" Command="{Binding CancelCommand}" Margin="5" />
-            <Button Width="150" Content="Guardar" Command="{Binding SaveCommand}" Margin="5" />
+            <Button Width="100" Content="Voltar" Click="BackButton_Click" Margin="5" />
+            <Button Width="100" Content="Cancelar" Command="{Binding CancelCommand}" Margin="5" />
+            <Button Width="100" Content="Eliminar Cliente" Command="{Binding EliminarClienteCommand}" Margin="5" />
+            <Button Width="100" Content="Guardar" Command="{Binding SaveCommand}" Margin="5" />
         </StackPanel>
 
     </Grid>
