@@ -142,6 +142,19 @@ public class ClientEditViewModel : BaseViewModel
 
         view.Refresh();
     }
+    
+    private void RemoverContato(object parameter)
+    {
+        if (parameter is ClientContact contactToRemove)
+        {
+            // Remover o contato da coleção e do DataGrid
+            SelectedClient.ClientContacts.Remove(contactToRemove);
+            OnPropertyChanged(nameof(ClientContacts));
+
+            ICollectionView view = CollectionViewSource.GetDefaultView(SelectedClient.ClientContacts);
+            view.Refresh();
+        }
+    }
 
     #endregion
 
@@ -151,6 +164,8 @@ public class ClientEditViewModel : BaseViewModel
     public ICommand CancelCommand => new RelayCommand(Cancel);
 
     public ICommand AdicionarContatoCommand => new RelayCommand(AdicionarContato);
+    
+    public ICommand RemoverContatoCommand => new RelayCommand(RemoverContato);
 
     #endregion
 
