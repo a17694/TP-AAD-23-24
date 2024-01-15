@@ -5,6 +5,8 @@ using InterfaceAAD.Repositories;
 using System.Windows.Controls;
 using System.ComponentModel;
 using System.Windows.Data;
+using System.Windows.Navigation;
+using InterfaceAAD.Views;
 
 namespace InterfaceAAD.ViewModels;
 
@@ -13,6 +15,7 @@ public class ClientEditViewModel : BaseViewModel
     #region Properties
 
     private ClientRepository _clientRepository;
+    private readonly NavigationService _navigationService;
     private Client _selectedClient;
     private List<TipoContacto> _tipoContacto;
     private TipoContacto _selectedContactType;
@@ -80,8 +83,9 @@ public class ClientEditViewModel : BaseViewModel
     {
     }
 
-    public ClientEditViewModel(int NIF)
+    public ClientEditViewModel(NavigationService navigationService, int NIF)
     {
+        _navigationService = navigationService;
         // Initialize the ClientRepository
         _clientRepository = new ClientRepository();
 
@@ -119,6 +123,8 @@ public class ClientEditViewModel : BaseViewModel
     public ICommand AdicionarContatoCommand => new RelayCommand(AdicionarContato);
 
     public ICommand RemoverContatoCommand => new RelayCommand(RemoverContato);
+    
+    public ICommand EliminarClienteCommand => new RelayCommand(EliminarCliente);
 
     #endregion
 
@@ -173,6 +179,24 @@ public class ClientEditViewModel : BaseViewModel
                 ICollectionView view = CollectionViewSource.GetDefaultView(SelectedClient.ClientContacts);
                 view.Refresh();
             }
+        }
+    }
+    
+    private void EliminarCliente(object parameter)
+    {
+        // Exibir uma mensagem de confirmação
+        MessageBoxResult result = MessageBox.Show("Tem a certeza de que deseja eliminar este cliente?", "Confirmação", MessageBoxButton.YesNo, MessageBoxImage.Question);
+
+        if (result == MessageBoxResult.Yes)
+        {
+            // Remover o cliente
+            //_clientRepository.Delete(SelectedClient);
+
+            // Exibir mensagem de sucesso ou lidar com outras operações após a exclusão
+            MessageBox.Show($"{SelectedClient.ClienteNome} foi eliminado com sucesso!");
+
+            // Navegar para a ClientsListView após a exclusão
+            _navigationService?.Navigate(new ClientsListView());
         }
     }
 
