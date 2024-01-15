@@ -2,6 +2,7 @@
 using System.Windows.Input;
 using InterfaceAAD.ViewModels;
 using System.Data;
+using System.Windows;
 
 namespace InterfaceAAD.Views
 {
@@ -67,6 +68,14 @@ namespace InterfaceAAD.Views
                 e.Column = textColumn;
             }
         }
+
+        private void AdicionarCliente_Click(object sender, RoutedEventArgs e)
+        {
+            ClientEditView clientEditView = new ClientEditView(NIF: 0);
+            NavigationService.Navigate(clientEditView);
+        }
+
+
 
         #endregion
     }

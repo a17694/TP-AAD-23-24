@@ -5,9 +5,14 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:sys="clr-namespace:System;assembly=mscorlib"
       xmlns:local="clr-namespace:InterfaceAAD.Views"
+      xmlns:vm="clr-namespace:InterfaceAAD.ViewModels"
       mc:Ignorable="d"
-      d:DesignHeight="450" d:DesignWidth="800"
+      d:DesignHeight="450" d:DesignWidth="850"
       Title="TestePagina">
+    
+    <Page.DataContext>
+        <vm:ClientEditViewModel />
+    </Page.DataContext>
 
     <Grid Margin="10">
 
@@ -18,49 +23,84 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
             <RowDefinition Height="*" />
-            <RowDefinition Height="4*" />
             <RowDefinition Height="*" />
+            <RowDefinition Height="4*" />
             <RowDefinition Height="*" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
 
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="0.2*" />
-            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="47*" />
+            <ColumnDefinition Width="213*" />
         </Grid.ColumnDefinitions>
 
 
-        <TextBlock Grid.Row="0" Grid.ColumnSpan="2" FontSize="24">Utilizador</TextBlock>
+        <TextBlock Grid.Row="0" Grid.ColumnSpan="2" FontSize="24" Margin="0,0,0,30" Grid.RowSpan="2">Utilizador</TextBlock>
 
         <Label Grid.Row="1" Grid.Column="0">Nome *</Label>
         <TextBox Grid.Row="1" Grid.Column="1" Margin="5,0,5,10" Text="{Binding SelectedClient.ClienteNome}" />
-        <Label Grid.Row="2" Grid.Column="0">NIF *</Label>
-        <TextBox Grid.Row="2" Grid.Column="1" Margin="5,0,5,10" Text="{Binding SelectedClient.ClienteNIF}" />
-        <Label Grid.Row="3" Grid.Column="0">Data Nascimento *</Label>
+        <Label Grid.Row="1" Grid.Column="0" Margin="0,30,0,34" Grid.RowSpan="3">NIF *</Label>
+        <TextBox Grid.Row="1" Grid.Column="1" Margin="5,30,5,5" Text="{Binding SelectedClient.ClienteNIF}" Grid.RowSpan="2" />
+        <Label Grid.Row="3" Grid.Column="0" Margin="0,0,0,30" Grid.RowSpan="2">Data Nascimento *</Label>
         <DatePicker Grid.Row="3" Grid.Column="1" Margin="5,0,5,10" SelectedDate="{Binding SelectedClient.ClienteDataNasc, StringFormat='dd/MM/yyyy'}" />
         <Label Grid.Row="4" Grid.Column="0">Morada *</Label>
         <TextBox Grid.Row="4" Grid.Column="1" Margin="5,0,5,10" Text="{Binding SelectedClient.ClienteMorada}" />
-        <Label Grid.Row="5" Grid.Column="0">Código Postal *</Label>
-        <TextBox Grid.Row="5" Grid.Column="1" Margin="5,0,5,10" Text="{Binding SelectedClient.CPCP}" />
+        <Label Grid.Row="4" Grid.Column="0" Margin="0,30,0,30" Grid.RowSpan="3">Código Postal *</Label>
+        <TextBox Grid.Row="4" Grid.Column="1" Margin="5,30,5,5" Text="{Binding SelectedClient.CPCP}" Grid.RowSpan="2" />
 
-        <DataGrid Grid.Row="6" Grid.Column="1" Name="myDataGrid" AutoGenerateColumns="False">
+        <Label Grid.Row="5" Grid.Column="0" Margin="0,30,0,30" Grid.RowSpan="3">Adicionar Contacto*</Label>
+        <StackPanel Grid.Row="5" Grid.Column="1" Orientation="Horizontal" Margin="5,26,0,4" Grid.RowSpan="2">
+            <TextBlock Text="Selecionar Tipo de Contato:" VerticalAlignment="Center" Margin="0,0,10,0" />
+            <ComboBox ItemsSource="{Binding TipoContacto}" 
+          DisplayMemberPath="DescTpContacto" 
+          SelectedItem="{Binding SelectedContactType, Mode=TwoWay}" 
+          Width="60"
+          Height="21" />
+            <TextBlock Text="Novo Contato:" VerticalAlignment="Center" Margin="10,0,10,0" />
+            <TextBox Text="{Binding NovoContato, Mode=TwoWay}" Width="200" Height="22" RenderTransformOrigin="0.5,0.5" >
+                <TextBox.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform/>
+                        <SkewTransform/>
+                        <RotateTransform Angle="0.19"/>
+                        <TranslateTransform/>
+                    </TransformGroup>
+                </TextBox.RenderTransform>
+            </TextBox>
+            <Button Content="&#xE109;" FontFamily="Segoe UI Symbol" FontSize="16" Command="{Binding AdicionarContatoCommand}" Width="26" Height="25"/>
+        </StackPanel>
+
+        <DataGrid Grid.Row="6" Name="myDataGrid" AutoGenerateColumns="False" ItemsSource="{Binding SelectedClient.ClientContacts}" CanUserAddRows="False" Margin="150,30,9,0" VerticalAlignment="Top" Grid.ColumnSpan="2" Grid.RowSpan="2">
             <DataGrid.Columns>
-                <!-- Coluna do ComboBox -->
+                <!-- Coluna do Tipo de Contato (não editável) -->
                 <DataGridTemplateColumn Header="Tipo de Contato">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <ComboBox ItemsSource="{Binding TipoContactos, RelativeSource={RelativeSource AncestorType={x:Type Window}}}" 
-                              SelectedItem="{Binding Tipo, Mode=TwoWay}" />
+                            <TextBlock Text="{Binding TipoContacto.DescTpContacto}" />
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
-                <!-- Segunda Coluna -->
-                <DataGridTemplateColumn Header="Contacto" Width="*">
+                <!-- Coluna do Contato (editável) -->
+                <DataGridTextColumn Header="Contato" Binding="{Binding ContactoCliente, Mode=TwoWay}" Width="*"/>
+                <!-- Coluna do Remover -->
+                <DataGridTemplateColumn Header="Remover">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <!-- Conteúdo da segunda coluna aqui -->
-                         </DataTemplate>
+                            <Button Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}"
+                                    Width="30"
+                                    Height="30"
+                                    HorizontalContentAlignment="Center"
+                                    VerticalContentAlignment="Center"
+                                    Background="Red"
+                                    Command="{Binding DataContext.RemoverContatoCommand, ElementName=myDataGrid}"
+                                    CommandParameter="{Binding ElementName=myDataGrid, Path=SelectedItem}">
+                                
+                                <Button.Content>
+                                    <TextBlock Text="X" FontSize="16" />
+                                </Button.Content>
+                            </Button>
+                        </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
             </DataGrid.Columns>
@@ -68,9 +108,7 @@
 
 
         <!-- Adicione outros controles conforme necessário para outros detalhes do cliente -->
-
-
-        <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch" Grid.Row="9" Grid.Column="1">
+        <StackPanel Orientation="Horizontal" Grid.Row="9" Grid.Column="1">
             <Button Width="150" Content="Voltar" Click="BackButton_Click" Margin="5" />
             <Button Width="150" Content="Cancelar" Command="{Binding CancelCommand}" Margin="5" />
             <Button Width="150" Content="Guardar" Command="{Binding SaveCommand}" Margin="5" />
