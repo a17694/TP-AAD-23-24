@@ -24,6 +24,8 @@ namespace InterfaceAAD.ViewModels
         private TipoContacto _selectedContactType;
         private string _novoContato;
         private string _novoContatoTipo;
+        private List<TipoContacto> _filteredTipoContacto;
+
 
         /// <summary>
         /// Gets or sets the list of client contacts.
@@ -95,6 +97,16 @@ namespace InterfaceAAD.ViewModels
             }
         }
 
+        public List<TipoContacto> TipoContactoFiltro
+        {
+            get { return _filteredTipoContacto; }
+            set
+            {
+                _filteredTipoContacto = value;
+                OnPropertyChanged(nameof(TipoContactoFiltro));
+            }
+        }
+
         #endregion
 
         #region Constructor
@@ -124,6 +136,8 @@ namespace InterfaceAAD.ViewModels
             ContactTypeRepository contactTypeRepository = new ContactTypeRepository();
             TipoContacto = contactTypeRepository.GetAll();
 
+            FilterClientContactTypes();
+
             GetClientContactName();
         }
 
@@ -140,6 +154,17 @@ namespace InterfaceAAD.ViewModels
             {
                 contact.TipoContacto = TipoContacto.FirstOrDefault(t => t.TpContactoID == contact.TipoContactoTpContactoID);
             }
+        }
+
+        public void FilterClientContactTypes()
+        {
+            // Filter contact types for the ComboBox
+            var filteredContactTypes = TipoContacto
+                .Where(type => !SelectedClient.ClientContacts.Any(contact => contact.TipoContactoTpContactoID == type.TpContactoID))
+                .ToList();
+
+            // Update TipoContacto with filtered contact types
+            TipoContactoFiltro = filteredContactTypes;
         }
 
         #endregion
@@ -201,6 +226,7 @@ namespace InterfaceAAD.ViewModels
             SelectedClient.ClientContacts.Add(novoContato);
 
             OnPropertyChanged(nameof(ClientContacts));
+            FilterClientContactTypes();
 
             // Clear the fields after adding the new contact
             NovoContatoTipo = null;
@@ -226,6 +252,8 @@ namespace InterfaceAAD.ViewModels
                     // Remove the contact from the collection and DataGrid
                     SelectedClient.ClientContacts.Remove(contactToRemove);
                     OnPropertyChanged(nameof(ClientContacts));
+                    FilterClientContactTypes();
+
 
                     ICollectionView view = CollectionViewSource.GetDefaultView(SelectedClient.ClientContacts);
                     view.Refresh();
@@ -277,6 +305,7 @@ namespace InterfaceAAD.ViewModels
             // Logic to cancel changes
             SelectedClient = _clientRepository.GetById(SelectedClient.ClienteNIF);
             GetClientContactName();
+            FilterClientContactTypes();
         }
 
         #endregion
