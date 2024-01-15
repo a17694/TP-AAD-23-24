@@ -184,10 +184,13 @@ namespace InterfaceAAD.Repositories
         private void UpdateClient(Client client, SqlTransaction transaction)
         {
             // Update the client
-            using (SqlCommand command = new SqlCommand("UPDATE Cliente SET ClienteNome = @Nome WHERE ClienteNIF = @NIF", _db, transaction))
+            using (SqlCommand command = new SqlCommand("UPDATE Cliente SET ClienteNome = @Nome, ClienteDataNasc = @ClienteDataNasc, ClienteMorada = @ClienteMorada, CPCP = @CPCP WHERE ClienteNIF = @NIF", _db, transaction))
             {
                 command.Parameters.AddWithValue("@NIF", client.ClienteNIF);
                 command.Parameters.AddWithValue("@Nome", client.ClienteNome);
+                command.Parameters.AddWithValue("@ClienteDataNasc", client.ClienteDataNasc);
+                command.Parameters.AddWithValue("@ClienteMorada", client.ClienteMorada);
+                command.Parameters.AddWithValue("@CPCP", client.CPCP);
 
                 command.ExecuteNonQuery();
             }
@@ -220,10 +223,13 @@ namespace InterfaceAAD.Repositories
         private void InsertClient(Client client, SqlTransaction transaction)
         {
             // Insert the client
-            using (SqlCommand command = new SqlCommand("INSERT INTO Cliente (ClienteNIF, ClienteNome) VALUES (@NIF, @Nome)", _db, transaction))
+            using (SqlCommand command = new SqlCommand("INSERT INTO Cliente (ClienteNIF, ClienteNome, ClienteDataNasc, ClienteMorada, CPCP) VALUES (@NIF, @Nome, @ClienteDataNasc, @ClienteMorada, @CPCP)", _db, transaction))
             {
                 command.Parameters.AddWithValue("@NIF", client.ClienteNIF);
                 command.Parameters.AddWithValue("@Nome", client.ClienteNome);
+                command.Parameters.AddWithValue("@ClienteDataNasc", client.ClienteDataNasc);
+                command.Parameters.AddWithValue("@ClienteMorada", client.ClienteMorada);
+                command.Parameters.AddWithValue("@CPCP", client.CPCP);
 
                 command.ExecuteNonQuery();
             }
