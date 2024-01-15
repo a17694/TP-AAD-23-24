@@ -305,6 +305,7 @@ namespace InterfaceAAD.ViewModels
             // Logic to cancel changes
             SelectedClient = _clientRepository.GetById(SelectedClient.ClienteNIF);
             GetClientContactName();
+            FilterClientContactTypes();
         }
 
         #endregion
