@@ -20,9 +20,6 @@ namespace InterfaceAAD.Views
 
         }
 
-   
-
-
         /// <summary>
         /// Handles the click event of the back button.
         /// Uses the NavigationService to navigate back to the previous menu.
@@ -30,11 +27,6 @@ namespace InterfaceAAD.Views
         private void BackButton_Click(object sender, RoutedEventArgs e)
         {
             NavigationService?.GoBack();
-        }
-
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-
         }
     }
 }

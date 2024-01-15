@@ -87,13 +87,12 @@ public class ClientEditViewModel : BaseViewModel
 
         // Get the selected client by NIF
         SelectedClient = _clientRepository.GetById(NIF);
-        
+
 
         ContactTypeRepository contactTypeRepository = new ContactTypeRepository();
         TipoContacto = contactTypeRepository.GetAll();
-        
+
         GetClientContactName();
-        
     }
 
 
@@ -143,6 +142,25 @@ public class ClientEditViewModel : BaseViewModel
         view.Refresh();
     }
 
+    private void RemoverContato(object parameter)
+    {
+        MessageBoxResult result = MessageBox.Show("Tem certeza de que deseja remover este contato?", "Confirmação",
+            MessageBoxButton.YesNo, MessageBoxImage.Question);
+
+        if (result == MessageBoxResult.Yes)
+        {
+            if (parameter is ClientContact contactToRemove)
+            {
+                // Remover o contato da coleção e do DataGrid
+                SelectedClient.ClientContacts.Remove(contactToRemove);
+                OnPropertyChanged(nameof(ClientContacts));
+
+                ICollectionView view = CollectionViewSource.GetDefaultView(SelectedClient.ClientContacts);
+                view.Refresh();
+            }
+        }
+    }
+
     #endregion
 
     #region ICommand Implementation
@@ -151,6 +169,8 @@ public class ClientEditViewModel : BaseViewModel
     public ICommand CancelCommand => new RelayCommand(Cancel);
 
     public ICommand AdicionarContatoCommand => new RelayCommand(AdicionarContato);
+
+    public ICommand RemoverContatoCommand => new RelayCommand(RemoverContato);
 
     #endregion
 
