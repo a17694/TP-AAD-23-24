@@ -7,7 +7,26 @@
       mc:Ignorable="d"
       Title="PropertyListView" Height="450" Width="800">
     <Grid>
-        <DataGrid Name="dataGridClientes" AutoGenerateColumns="True"  IsReadOnly="True" ItemsSource="{Binding Properties}" />
-        
+        <DataGrid Name="dataGridProperties" AutoGenerateColumns="true" IsReadOnly="True" ItemsSource="{Binding Properties}">
+            <DataGrid.CellStyle>
+                <Style TargetType="DataGridCell">
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding Estado}" Value="Indisponível">
+                            <Setter Property="Background" Value="Red"/>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding Estado}" Value="Disponivél">
+                            <Setter Property="Background" Value="Green"/>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding Estado}" Value="Reservada">
+                            <Setter Property="Background" Value="Orange"/>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding Estado}" Value="Vendida">
+                            <Setter Property="Background" Value="BlueViolet"/>
+                        </DataTrigger>
+                        <!-- Adicione mais DataTriggers conforme necessário -->
+                    </Style.Triggers>
+                </Style>
+            </DataGrid.CellStyle>
+        </DataGrid>
     </Grid>
 </Page>

@@ -14,15 +14,11 @@ namespace InterfaceAAD.Repositories
 {
     public class PropertyRepository : BaseRepository, IBaseRepository<Property>
     {
-        public bool Add(Property entity)
+        public bool Save(Property entity)
         {
             throw new NotImplementedException();
         }
 
-        public bool Edit(Property entity)
-        {
-            throw new NotImplementedException();
-        }
 
         public List<Property> GetAll()
         {
@@ -77,9 +73,66 @@ namespace InterfaceAAD.Repositories
         public Task<DataTable> GetAllPropertiesAsDataTable()
         {
             List<Property> properties = GetAll();
-            DataTable dataTable = DataTableConverter.ToDataTable(properties);
+            properties = GetState(properties);
+
+            DataTable dataTable = new DataTable();
+            dataTable.Columns.Add("NIP", typeof(string));
+            dataTable.Columns.Add("Morada", typeof(string));
+            dataTable.Columns.Add("Tipo", typeof(string));
+            dataTable.Columns.Add("Tipologia", typeof(string));
+            dataTable.Columns.Add("Estado", typeof(string));
+
+            foreach (Property property in properties)
+            {
+                DataRow row = dataTable.NewRow();
+                row["NIP"] = property.PropriedadeNIP;
+                row["Morada"] = property.PropriedadeMorada;
+                row["Tipo"] = property.DescTpPropriedade;
+                row["Tipologia"] = property.DescTipologia;
+                row["Estado"] = property.Estado; 
+
+                dataTable.Rows.Add(row);
+            }
+
+            
             return Task.FromResult(dataTable);
         }
 
+        public List<Property> GetState(List<Property> properties)
+        {
+            List<Property> updatedProperties = new List<Property>();
+
+            foreach (Property property in properties)
+            {
+                string query = $"EXEC VerificarEstadoPropriedade @NIPPropriedade = '{property.PropriedadeNIP}'";
+
+                using (SqlCommand command = new SqlCommand(query, _db))
+                    try
+                    {
+                        using (SqlDataReader reader = command.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                Property updatedProperty = new Property();
+                                updatedProperty = property;
+
+                                PropertyState estado;
+                                Enum.TryParse<PropertyState>((string)(reader["Estado"]), out estado);
+                                updatedProperty.Estado = estado;
+
+                                updatedProperties.Add(updatedProperty);
+                            }
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show($"{ex}");
+                    }
+            }
+
+
+            return updatedProperties;
+
+        }
     }
 }

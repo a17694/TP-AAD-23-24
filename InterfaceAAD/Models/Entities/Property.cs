@@ -8,9 +8,10 @@ namespace InterfaceAAD.Models.Entities
 {
     public enum PropertyState
     {
-        Vendido,
-        Reservado,
-        Disponivel
+        Indisponível,
+        Disponível,
+        Vendida,
+        Reservada,
     }
     public class Property
     {
