@@ -22,23 +22,25 @@ public class Client
     public string CPCP { get; set; }
 
     public List<ClientContact> ClientContacts { get; set; } = new List<ClientContact>();
-    
+
     public Client()
-    {}
+    {
+    }
 
     /// <summary>
     /// Initializes a new instance of the <see cref="Client"/> class with the specified NIF.
     /// </summary>
     /// <param name="clienteNif">The NIF (Tax Identification Number) of the client.</param>
     /// <param name="clienteNome">The name of the client (optional).</param>
+    /// <param name="clienteDataNasc"></param>
+    /// <param name="clienteMorada"></param>
+    /// <param name="cPCP"></param>
     public Client(int clienteNif, string clienteNome = null, DateTime? clienteDataNasc = null, string clienteMorada = null, string cPCP = null )
     {
         ClienteNIF= clienteNif;
         ClienteNome = clienteNome;
-        ClienteDataNasc = clienteDataNasc.HasValue ? clienteDataNasc.Value : DateTime.MinValue;
+        ClienteDataNasc = clienteDataNasc.HasValue ? clienteDataNasc.Value : DateTime.Now;
         ClienteMorada = clienteMorada;
         CPCP = cPCP;
     }
-    
-    
 }

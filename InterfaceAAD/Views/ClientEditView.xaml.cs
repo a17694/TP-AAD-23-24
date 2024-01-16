@@ -33,7 +33,8 @@ namespace InterfaceAAD.Views
         /// </summary>
         private void BackButton_Click(object sender, RoutedEventArgs e)
         {
-            NavigationService?.GoBack();
+            new ClientListViewModel().ReloadClients();
+            NavigationService?.Navigate(new ClientsListView());
         }
 
         private void PCodeComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)

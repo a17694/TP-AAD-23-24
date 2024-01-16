@@ -98,7 +98,7 @@ namespace InterfaceAAD.Repositories
         /// <returns>The client entity if found; otherwise, an empty client.</returns>
         public Client GetById(int NIF)
         {
-            Client client = new Client();
+            Client client = new Client(NIF);
 
             using (SqlCommand command = new SqlCommand("SELECT * FROM Cliente WHERE ClienteNIF = @NIF", _db))
             {
@@ -109,13 +109,13 @@ namespace InterfaceAAD.Repositories
                     if (reader.Read())
                     {
                         client = new Client
-                        {
-                            ClienteNIF = (int)reader["ClienteNIF"],
-                            ClienteNome = (string)reader["ClienteNome"],
-                            ClienteDataNasc = (DateTime)reader["ClienteDataNasc"],
-                            ClienteMorada = (string)reader["ClienteMorada"],
-                            CPCP = (string)reader["CPCP"]
-                        };
+                        (
+                            (int)reader["ClienteNIF"],
+                            (string)reader["ClienteNome"],
+                            (DateTime)reader["ClienteDataNasc"],
+                            (string)reader["ClienteMorada"],
+                           (string)reader["CPCP"]
+                        );
                     }
                 }
             }

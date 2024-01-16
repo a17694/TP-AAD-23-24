@@ -293,6 +293,9 @@ namespace InterfaceAAD.ViewModels
         /// <param name="parameter">The command parameter.</param>
         private void EliminarCliente(object parameter)
         {
+            if (SelectedClient.ClienteNIF == 0)
+                return;
+            
             // Display a confirmation message
             MessageBoxResult result = MessageBox.Show("Tem a certeza de que deseja eliminar este cliente?", "Confirmação", MessageBoxButton.YesNo, MessageBoxImage.Question);
 

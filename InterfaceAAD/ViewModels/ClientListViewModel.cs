@@ -33,6 +33,11 @@ public class ClientListViewModel : BaseViewModel
     {
         LoadClients();
     }
+    
+    public void ReloadClients()
+    { 
+        LoadClients();
+    }
 
     /// <summary>
     /// Asynchronously loads client data into the DataTable.
