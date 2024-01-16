@@ -1,6 +1,7 @@
 ﻿using System.Windows;
 using InterfaceAAD.ViewModels;
 using System.Windows.Controls;
+using System.Windows.Input;
 
 namespace InterfaceAAD.Views
 {
@@ -34,5 +35,17 @@ namespace InterfaceAAD.Views
         {
             NavigationService?.GoBack();
         }
+
+
+        private void NumericTextBox_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            
+            if (!char.IsDigit(e.Text, 0))
+            {
+                e.Handled = true; 
+            }
+        }
+
+
     }
 }
