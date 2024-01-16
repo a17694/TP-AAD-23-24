@@ -13,6 +13,8 @@
         /// <returns>True if the save operation is successful, otherwise false.</returns>
         bool Save(M entity);
 
+        bool Delete(M entity);
+
         /// <summary>
         /// Retrieves an entity by its unique identifier.
         /// </summary>

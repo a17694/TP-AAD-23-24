@@ -1,7 +1,5 @@
 ﻿#region Usings
 
-using System;
-using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Windows;
@@ -26,6 +24,12 @@ namespace InterfaceAAD.Repositories
         /// <param name="client">The client entity to be saved.</param>
         public bool Save(Client client)
         {
+
+            if (client.ClienteNIF == 0)
+            {
+                return false;
+            }
+            
             // Check if the client already exists
             bool clientExists = CheckIfClientExists(client.ClienteNIF);
 
@@ -57,6 +61,26 @@ namespace InterfaceAAD.Repositories
             }
 
             return false;
+        }
+
+        public bool Delete(Client client)
+        {
+            using (SqlCommand command = new SqlCommand("DELETE FROM Cliente WHERE ClienteNIF = @NIF", _db))
+            {
+                command.Parameters.AddWithValue("@NIF", client.ClienteNIF);
+
+                try
+                {
+                    int rowsAffected = command.ExecuteNonQuery();
+
+                    return rowsAffected > 0;
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Erro durante a exclusão: {ex.Message}");
+                    return false;
+                }
+            }
         }
 
         /// <summary>

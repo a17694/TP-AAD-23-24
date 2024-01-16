@@ -1,13 +1,7 @@
-﻿using InterfaceAAD.Converters;
-using InterfaceAAD.Models.Entities;
+﻿using InterfaceAAD.Models.Entities;
 using InterfaceAAD.Models.Interfaces;
-using System;
-using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 
 namespace InterfaceAAD.Repositories
@@ -15,6 +9,11 @@ namespace InterfaceAAD.Repositories
     public class PropertyRepository : BaseRepository, IBaseRepository<Property>
     {
         public bool Save(Property entity)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool Delete(Property entity)
         {
             throw new NotImplementedException();
         }
