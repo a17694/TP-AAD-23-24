@@ -21,6 +21,8 @@ namespace InterfaceAAD.ViewModels
         private string _novoContato;
         private string _novoContatoTipo;
         private List<TipoContacto> _filteredTipoContacto;
+        private List<PCode> _pCodeList;
+        private PCode _selectedPCodeCliente;
 
 
         /// <summary>
@@ -103,6 +105,27 @@ namespace InterfaceAAD.ViewModels
             }
         }
 
+        public List<PCode> PCodeList
+        {
+            get { return _pCodeList; }
+            set
+            {
+                _pCodeList = value;
+                OnPropertyChanged(nameof(PCodeList));
+            }
+        }
+
+        public PCode SelectedPCodeClient
+        {
+            get { return _selectedPCodeCliente; }
+            set
+            {
+                _selectedPCodeCliente = value;
+                OnPropertyChanged(nameof(SelectedPCodeClient));
+            }
+
+        }
+
         #endregion
 
         #region Constructor
@@ -132,7 +155,18 @@ namespace InterfaceAAD.ViewModels
             FilterClientContactTypes();
 
             GetClientContactName();
+
+            PCodeRepository pCodeRepository = new PCodeRepository();
+            PCodeList = pCodeRepository.GetAll();
+
+            GetClienteCP();
         }
+
+        public void GetClienteCP()
+        {
+            SelectedPCodeClient = PCodeList.FirstOrDefault(cp => cp.CP == SelectedClient.CPCP);
+        }
+
 
         /// <summary>
         /// Loads client contacts and associates contact types.

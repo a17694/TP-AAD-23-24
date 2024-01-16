@@ -2,6 +2,7 @@
 using InterfaceAAD.ViewModels;
 using System.Windows.Controls;
 using System.Windows.Input;
+using InterfaceAAD.Models.Entities;
 
 namespace InterfaceAAD.Views
 {
@@ -36,6 +37,18 @@ namespace InterfaceAAD.Views
             NavigationService?.GoBack();
         }
 
+        private void PCodeComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (sender is ComboBox comboBox && comboBox.SelectedItem != null)
+            {
+                PCode selectedPCodeClient = (PCode)comboBox.SelectedItem;
+
+                if (DataContext is ClientEditViewModel clientEditViewModel)
+                {
+                    clientEditViewModel.SelectedClient.CPCP = selectedPCodeClient.CP;
+                }
+            }
+        }
 
         private void NumericTextBox_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
