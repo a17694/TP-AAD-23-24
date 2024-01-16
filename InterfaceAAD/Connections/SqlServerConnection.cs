@@ -1,7 +1,7 @@
 ﻿using System.Data.SqlClient;
 
 
-namespace InterfaceAAD.DataBase
+namespace InterfaceAAD.Connections
 {
     /// <summary>
     /// Represents a connection to a SQL Server database.
@@ -41,8 +41,8 @@ namespace InterfaceAAD.DataBase
                 _connectionString = $"Data Source={host};Initial Catalog={db};Integrated Security={security};";
             }
 
-                _connection = new SqlConnection(_connectionString);
-                _connection.Open();
+            _connection = new SqlConnection(_connectionString);
+            _connection.Open();
 
         }
 
