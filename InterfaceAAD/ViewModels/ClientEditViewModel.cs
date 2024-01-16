@@ -2,11 +2,8 @@
 using System.Windows;
 using System.Windows.Input;
 using InterfaceAAD.Repositories;
-using System.Windows.Controls;
 using System.ComponentModel;
 using System.Windows.Data;
-using System.Windows.Navigation;
-using InterfaceAAD.Views;
 
 namespace InterfaceAAD.ViewModels
 {
@@ -18,7 +15,6 @@ namespace InterfaceAAD.ViewModels
         #region Properties
 
         private ClientRepository _clientRepository;
-        private readonly NavigationService _navigationService;
         private Client _selectedClient;
         private List<TipoContacto> _tipoContacto;
         private TipoContacto _selectedContactType;
@@ -121,12 +117,9 @@ namespace InterfaceAAD.ViewModels
         /// <summary>
         /// Initializes a new instance of the <see cref="ClientEditViewModel"/> class with NavigationService and client NIF.
         /// </summary>
-        /// <param name="navigationService">The NavigationService instance.</param>
         /// <param name="NIF">The NIF (Número de Identificação Fiscal) of the client.</param>
-        public ClientEditViewModel(NavigationService navigationService, int NIF)
+        public ClientEditViewModel(int NIF)
         {
-            _navigationService = navigationService;
-
             // Initialize the ClientRepository
             _clientRepository = new ClientRepository();
 
@@ -274,12 +267,9 @@ namespace InterfaceAAD.ViewModels
             {
                 // Remove the client
                 _clientRepository.Delete(SelectedClient);
-
+                SelectedClient = new Client(0);
                 // Display a success message or handle other operations after deletion
                 MessageBox.Show($"{SelectedClient.ClienteNome} foi eliminado com sucesso!");
-
-                // Navigate to ClientsListView after deletion
-                //_navigationService.Navigate(new ClientsListView());
             }
         }
 
@@ -306,7 +296,7 @@ namespace InterfaceAAD.ViewModels
             GetClientContactName();
             FilterClientContactTypes();
         }
-
+        
         #endregion
     }
 }

@@ -23,7 +23,7 @@ namespace InterfaceAAD.Views
                 textBoxNIF.IsReadOnly = true;
             }
             
-            DataContext = new ClientEditViewModel(NavigationService, NIF);
+            DataContext = new ClientEditViewModel(NIF);
 
         }
 
