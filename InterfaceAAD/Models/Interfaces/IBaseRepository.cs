@@ -13,6 +13,11 @@
         /// <returns>True if the save operation is successful, otherwise false.</returns>
         bool Save(M entity);
 
+        /// <summary>
+        /// Deletes an entity from the repository.
+        /// </summary>
+        /// <param name="entity">The entity to be deleted.</param>
+        /// <returns>True if the delete operation is successful, otherwise false.</returns>
         bool Delete(M entity);
 
         /// <summary>

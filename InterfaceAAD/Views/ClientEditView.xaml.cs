@@ -18,13 +18,13 @@ namespace InterfaceAAD.Views
         public ClientEditView(int NIF)
         {
             InitializeComponent();
-
+            
             if (NIF != 0)
             {
                 textBoxNIF.IsReadOnly = true;
             }
-
-            DataContext = new ClientEditViewModel(NavigationService, NIF);
+            
+            DataContext = new ClientEditViewModel(NIF);
 
         }
 
@@ -56,7 +56,6 @@ namespace InterfaceAAD.Views
             if (!char.IsDigit(e.Text, 0))
             {
                 e.Handled = true; 
-
             }
         }
 
