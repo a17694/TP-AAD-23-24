@@ -1,4 +1,4 @@
-﻿using InterfaceAAD.DataBase;
+﻿using InterfaceAAD.Connections;
 using System.Data.SqlClient;
 
 namespace InterfaceAAD.Repositories

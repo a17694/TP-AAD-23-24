@@ -18,12 +18,12 @@ namespace InterfaceAAD.Repositories
             throw new NotImplementedException();
         }
 
-
         public List<Property> GetAll()
         {
             List<Property> properties = new List<Property>();
 
-            string query = "SELECT PropriedadeNIP,PropriedadeMorada,Area,DescTpPropriedade,DescTipologia,ClienteClienteNIF,CPCP,Localidade FROM Propriedade join TipoPropriedade ON Propriedade.TipoPropriedadeTpPropriedadeID = TipoPropriedade.TpPropriedadeID Join CP ON Propriedade.CPCP = CP.CP left join (SELECT PropriedadePropriedadeNIP, DescTipologia FROM TipoTipologia join TipologiaPropriedade ON TipoTipologia.TpTipologiaID = TipologiaPropriedade.TipoTipologiaTpTipologiaID) AS DescTipoProp ON Propriedade.PropriedadeNIP = DescTipoProp.PropriedadePropriedadeNIP";
+            string query =
+                "SELECT PropriedadeNIP,PropriedadeMorada,Area,DescTpPropriedade,DescTipologia,ClienteClienteNIF,CPCP,Localidade FROM Propriedade join TipoPropriedade ON Propriedade.TipoPropriedadeTpPropriedadeID = TipoPropriedade.TpPropriedadeID Join CP ON Propriedade.CPCP = CP.CP left join (SELECT PropriedadePropriedadeNIP, DescTipologia FROM TipoTipologia join TipologiaPropriedade ON TipoTipologia.TpTipologiaID = TipologiaPropriedade.TipoTipologiaTpTipologiaID) AS DescTipoProp ON Propriedade.PropriedadeNIP = DescTipoProp.PropriedadePropriedadeNIP";
 
             using (SqlCommand command = new SqlCommand(query, _db))
                 try
@@ -40,16 +40,15 @@ namespace InterfaceAAD.Repositories
                             else tipologia = (string)reader["DescTipologia"];
 
                             Property property = new Property(
-                               (string)(reader["PropriedadeNIP"]),
-                               (string)reader["PropriedadeMorada"],
-                               (int)reader["Area"],
-                               (string)reader["DescTpPropriedade"],
-                               (int)reader["ClienteClienteNIF"],
-                               (string)reader["CPCP"],
-                               (string)reader["Localidade"],
-                               tipologia
-                               
-                           ) ;
+                                (string)(reader["PropriedadeNIP"]),
+                                (string)reader["PropriedadeMorada"],
+                                (int)reader["Area"],
+                                (string)reader["DescTpPropriedade"],
+                                (int)reader["ClienteClienteNIF"],
+                                (string)reader["CPCP"],
+                                (string)reader["Localidade"],
+                                tipologia
+                            );
 
                             properties.Add(property);
                         }
@@ -67,8 +66,6 @@ namespace InterfaceAAD.Repositories
         {
             throw new NotImplementedException();
         }
-
-
 
         public Task<DataTable> GetAllPropertiesAsDataTable()
         {
@@ -89,12 +86,12 @@ namespace InterfaceAAD.Repositories
                 row["Morada"] = property.PropriedadeMorada;
                 row["Tipo"] = property.DescTpPropriedade;
                 row["Tipologia"] = property.DescTipologia;
-                row["Estado"] = property.Estado; 
+                row["Estado"] = property.Estado;
 
                 dataTable.Rows.Add(row);
             }
 
-            
+
             return Task.FromResult(dataTable);
         }
 
@@ -130,9 +127,7 @@ namespace InterfaceAAD.Repositories
                     }
             }
 
-
             return updatedProperties;
-
         }
     }
 }

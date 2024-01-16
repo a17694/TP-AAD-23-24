@@ -63,21 +63,29 @@ namespace InterfaceAAD.Repositories
             return false;
         }
 
+        /// <summary>
+        /// Deletes a client entity from the database.
+        /// </summary>
+        /// <param name="client">The client entity to be deleted.</param>
+        /// <returns>True if the delete operation is successful, otherwise false.</returns>
         public bool Delete(Client client)
         {
             using (SqlCommand command = new SqlCommand("DELETE FROM Cliente WHERE ClienteNIF = @NIF", _db))
             {
+                // Set the parameter for the client's NIF
                 command.Parameters.AddWithValue("@NIF", client.ClienteNIF);
 
                 try
                 {
+                    // Execute the delete command
                     int rowsAffected = command.ExecuteNonQuery();
 
+                    // Return true if rows were affected (successful delete), otherwise false
                     return rowsAffected > 0;
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show($"Erro durante a exclusão: {ex.Message}");
+                    MessageBox.Show($"Erro ao remover: {ex.Message}");
                     return false;
                 }
             }
@@ -90,7 +98,7 @@ namespace InterfaceAAD.Repositories
         /// <returns>The client entity if found; otherwise, an empty client.</returns>
         public Client GetById(int NIF)
         {
-            Client client = new Client();
+            Client client = new Client(NIF);
 
             using (SqlCommand command = new SqlCommand("SELECT * FROM Cliente WHERE ClienteNIF = @NIF", _db))
             {
@@ -101,13 +109,13 @@ namespace InterfaceAAD.Repositories
                     if (reader.Read())
                     {
                         client = new Client
-                        {
-                            ClienteNIF = (int)reader["ClienteNIF"],
-                            ClienteNome = (string)reader["ClienteNome"],
-                            ClienteDataNasc = (DateTime)reader["ClienteDataNasc"],
-                            ClienteMorada = (string)reader["ClienteMorada"],
-                            CPCP = (string)reader["CPCP"]
-                        };
+                        (
+                            (int)reader["ClienteNIF"],
+                            (string)reader["ClienteNome"],
+                            (DateTime)reader["ClienteDataNasc"],
+                            (string)reader["ClienteMorada"],
+                           (string)reader["CPCP"]
+                        );
                     }
                 }
             }

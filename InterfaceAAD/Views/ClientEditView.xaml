@@ -9,7 +9,7 @@
       mc:Ignorable="d"
       d:DesignHeight="450" d:DesignWidth="850"
       Title="TestePagina">
-    
+
     <Page.DataContext>
         <vm:ClientEditViewModel />
     </Page.DataContext>
@@ -20,7 +20,7 @@
             <RowDefinition Height="2*" />
             <RowDefinition Height="*" />
             <RowDefinition Height="*" />
-            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
             <RowDefinition Height="*" />
             <RowDefinition Height="*" />
             <RowDefinition Height="*" />
@@ -31,37 +31,44 @@
 
 
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="47*" />
-            <ColumnDefinition Width="213*" />
+            <ColumnDefinition Width="25*" />
+            <ColumnDefinition Width="50*" />
+            <ColumnDefinition Width="20*" />
+            <ColumnDefinition Width="50*" />
         </Grid.ColumnDefinitions>
 
 
-        <TextBlock Grid.Row="0" Grid.ColumnSpan="2" FontSize="24" Margin="0,0,0,30" Grid.RowSpan="2">Utilizador</TextBlock>
+        <TextBlock Grid.Row="0" Grid.ColumnSpan="3" FontSize="24" Margin="0,0,0,30" >Utilizador</TextBlock>
 
-        
-        <Label Grid.Row="1" Grid.Column="0" >NIF *</Label>
-        <TextBox Name="textBoxNIF" Grid.Row="1" Grid.Column="1" Margin="5,0,5,10" Text="{Binding SelectedClient.ClienteNIF}" IsReadOnly="False" />
-        
-        <Label Grid.Row="1" Grid.Column="0" Margin="0,30,0,34" Grid.RowSpan="3">Nome *</Label>
-        <TextBox Grid.Row="1" Grid.Column="1" Margin="5,30,5,5" Text="{Binding SelectedClient.ClienteNome}" Grid.RowSpan="2" />
+
+        <Label Grid.Row="1" Grid.Column="0"  >NIF *</Label>
+        <TextBox Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="3" Name="textBoxNIF" MaxLength="9" Margin="5,1,5,1" VerticalAlignment="Stretch" VerticalContentAlignment="Center" Text="{Binding SelectedClient.ClienteNIF}" IsReadOnly="False" PreviewTextInput="NumericTextBox_PreviewTextInput" />
+
+        <Label Grid.Row="2" Grid.Column="0">Nome *</Label>
+        <TextBox Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="3" Margin="5,1,5,1" VerticalAlignment="Stretch" VerticalContentAlignment="Center" Text="{Binding SelectedClient.ClienteNome}" />
         
         <Label Grid.Row="3" Grid.Column="0" Margin="0,0,0,30" Grid.RowSpan="2">Data Nascimento *</Label>
-        <DatePicker Grid.Row="3" Grid.Column="1" Margin="5,0,5,10" SelectedDate="{Binding SelectedClient.ClienteDataNasc, StringFormat='dd/MM/yyyy'}" />
+        <DatePicker Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="3" Margin="5,1,5,1" SelectedDate="{Binding SelectedClient.ClienteDataNasc, StringFormat='dd/MM/yyyy' }" />
+        
         <Label Grid.Row="4" Grid.Column="0">Morada *</Label>
-        <TextBox Grid.Row="4" Grid.Column="1" Margin="5,0,5,10" Text="{Binding SelectedClient.ClienteMorada}" />
-        <Label Grid.Row="4" Grid.Column="0" Margin="0,30,0,30" Grid.RowSpan="3">Código Postal *</Label>
-        <TextBox Grid.Row="4" Grid.Column="1" Margin="5,30,5,5" Text="{Binding SelectedClient.CPCP}" Grid.RowSpan="2" />
+        <TextBox Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="3" Margin="5,1,5,1" VerticalContentAlignment="Center" Text="{Binding SelectedClient.ClienteMorada}" />
+       
+        <Label Grid.Row="5" Grid.Column="0" Margin="5,1,5,1">Código Postal *</Label>
+        <ComboBox Grid.Row="5" Grid.Column="1" Name="PCodeComboBox" Margin="5,1,5,1" Width="200" HorizontalAlignment="Left"  ItemsSource="{Binding PCodeList}" DisplayMemberPath="CP" SelectedItem="{Binding SelectedPCodeClient}" SelectionChanged="PCodeComboBox_SelectionChanged"/>
+        <Label Grid.Row="5" Grid.Column="2" Margin="5,1,5,1" VerticalAlignment="Center" HorizontalAlignment="Stretch">Localidade</Label>
+        <TextBox Grid.Row="5" Grid.Column="3" Margin="5,1,5,2" IsEnabled="False" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Center" Grid.RowSpan="1" Text="{Binding SelectedPCodeClient.Localidade}" />
 
-        <Label Grid.Row="5" Grid.Column="0" Margin="0,30,0,30" Grid.RowSpan="3">Adicionar Contacto*</Label>
-        <StackPanel Grid.Row="5" Grid.Column="1" Orientation="Horizontal" Margin="5,26,0,4" Grid.RowSpan="2">
-            <TextBlock Text="Selecionar Tipo de Contato:" VerticalAlignment="Center" Margin="0,0,10,0" />
-            <ComboBox ItemsSource="{Binding TipoContactoFiltro}" 
+        <Label Grid.Row="6" Grid.Column="0" Margin="5,1,5,1">Adicionar Contacto*</Label>
+        <StackPanel Grid.Row="6" Grid.Column="1" Grid.ColumnSpan="3" VerticalAlignment="Center" Orientation="Horizontal" Margin="5,1,5,1">
+            <TextBlock Text="Selecionar Tipo de Contato:" VerticalAlignment="Center"  Margin="0,0,10,0" />
+            <ComboBox  VerticalAlignment="Center" ItemsSource="{Binding TipoContactoFiltro}" 
           DisplayMemberPath="DescTpContacto" 
+       
           SelectedItem="{Binding SelectedContactType, Mode=TwoWay}" 
-          Width="60"
+          Width="70"
           Height="21" />
             <TextBlock Text="Novo Contato:" VerticalAlignment="Center" Margin="10,0,10,0" />
-            <TextBox Text="{Binding NovoContato, Mode=TwoWay}" Width="200" Height="22" RenderTransformOrigin="0.5,0.5" >
+            <TextBox VerticalAlignment="Center" VerticalContentAlignment="Center" Text="{Binding NovoContato, Mode=TwoWay}" Width="200" Height="23"  Margin="0,2,0,2" RenderTransformOrigin="0.5,0.5" >
                 <TextBox.RenderTransform>
                     <TransformGroup>
                         <ScaleTransform/>
@@ -71,16 +78,16 @@
                     </TransformGroup>
                 </TextBox.RenderTransform>
             </TextBox>
-            <Button Content="&#xE109;" FontFamily="Segoe UI Symbol" FontSize="16" Command="{Binding AdicionarContatoCommand}" Width="26" Height="25"/>
+            <Button Content="&#xE109;" FontFamily="Segoe UI Symbol" FontSize="10" Command="{Binding AdicionarContatoCommand}" Width="20" Height="20" VerticalAlignment="Center"/>
         </StackPanel>
 
-        <DataGrid Grid.Row="6" Name="myDataGrid" AutoGenerateColumns="False" ItemsSource="{Binding SelectedClient.ClientContacts}" CanUserAddRows="False" Margin="150,30,9,0" VerticalAlignment="Top" Grid.ColumnSpan="2" Grid.RowSpan="2">
+        <DataGrid Grid.Row="6" Name="myDataGrid" AutoGenerateColumns="False" ItemsSource="{Binding SelectedClient.ClientContacts}" CanUserAddRows="False" Margin="0,30,9,0" VerticalAlignment="Top" Grid.ColumnSpan="3" Grid.RowSpan="2" Grid.Column="1">
             <DataGrid.Columns>
                 <!-- Coluna do Tipo de Contato (não editável) -->
                 <DataGridTemplateColumn Header="Tipo de Contato">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <TextBlock Text="{Binding TipoContacto.DescTpContacto}" />
+                            <TextBlock  Text="{Binding TipoContacto.DescTpContacto}" />
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
@@ -98,7 +105,7 @@
                                     Background="Red"
                                     Command="{Binding DataContext.RemoverContatoCommand, ElementName=myDataGrid}"
                                     CommandParameter="{Binding ElementName=myDataGrid, Path=SelectedItem}">
-                                
+
                                 <Button.Content>
                                     <TextBlock Text="X" FontSize="16" />
                                 </Button.Content>
@@ -111,7 +118,7 @@
 
 
         <!-- Adicione outros controles conforme necessário para outros detalhes do cliente -->
-        <StackPanel Orientation="Horizontal" Grid.Row="9" Grid.Column="1">
+        <StackPanel Orientation="Horizontal" Grid.Row="9" Grid.Column="1" Grid.ColumnSpan="3">
             <Button Width="100" Content="Voltar" Click="BackButton_Click" Margin="5" />
             <Button Width="100" Content="Cancelar" Command="{Binding CancelCommand}" Margin="5" />
             <Button Width="100" Content="Eliminar Cliente" Command="{Binding EliminarClienteCommand}" Margin="5" />

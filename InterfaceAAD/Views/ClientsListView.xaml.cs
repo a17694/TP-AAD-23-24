@@ -78,11 +78,8 @@ namespace InterfaceAAD.Views
 
         private void AdicionarCliente_Click(object sender, RoutedEventArgs e)
         {
-            ClientEditView clientEditView = new ClientEditView(NIF: 0);
-            NavigationService.Navigate(clientEditView);
+            NavigationService?.Navigate(new ClientEditView(0));
         }
-
-
 
         #endregion
     }

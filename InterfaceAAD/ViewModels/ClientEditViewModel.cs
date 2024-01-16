@@ -2,11 +2,8 @@
 using System.Windows;
 using System.Windows.Input;
 using InterfaceAAD.Repositories;
-using System.Windows.Controls;
 using System.ComponentModel;
 using System.Windows.Data;
-using System.Windows.Navigation;
-using InterfaceAAD.Views;
 
 namespace InterfaceAAD.ViewModels
 {
@@ -18,13 +15,14 @@ namespace InterfaceAAD.ViewModels
         #region Properties
 
         private ClientRepository _clientRepository;
-        private readonly NavigationService _navigationService;
         private Client _selectedClient;
         private List<TipoContacto> _tipoContacto;
         private TipoContacto _selectedContactType;
         private string _novoContato;
         private string _novoContatoTipo;
         private List<TipoContacto> _filteredTipoContacto;
+        private List<PCode> _pCodeList;
+        private PCode _selectedPCodeCliente;
 
 
         /// <summary>
@@ -107,6 +105,27 @@ namespace InterfaceAAD.ViewModels
             }
         }
 
+        public List<PCode> PCodeList
+        {
+            get { return _pCodeList; }
+            set
+            {
+                _pCodeList = value;
+                OnPropertyChanged(nameof(PCodeList));
+            }
+        }
+
+        public PCode SelectedPCodeClient
+        {
+            get { return _selectedPCodeCliente; }
+            set
+            {
+                _selectedPCodeCliente = value;
+                OnPropertyChanged(nameof(SelectedPCodeClient));
+            }
+
+        }
+
         #endregion
 
         #region Constructor
@@ -121,12 +140,9 @@ namespace InterfaceAAD.ViewModels
         /// <summary>
         /// Initializes a new instance of the <see cref="ClientEditViewModel"/> class with NavigationService and client NIF.
         /// </summary>
-        /// <param name="navigationService">The NavigationService instance.</param>
         /// <param name="NIF">The NIF (Número de Identificação Fiscal) of the client.</param>
-        public ClientEditViewModel(NavigationService navigationService, int NIF)
+        public ClientEditViewModel(int NIF)
         {
-            _navigationService = navigationService;
-
             // Initialize the ClientRepository
             _clientRepository = new ClientRepository();
 
@@ -139,6 +155,16 @@ namespace InterfaceAAD.ViewModels
             FilterClientContactTypes();
 
             GetClientContactName();
+
+            PCodeRepository pCodeRepository = new PCodeRepository();
+            PCodeList = pCodeRepository.GetAll();
+
+            GetClienteCP();
+        }
+
+        public void GetClienteCP()
+        {
+            SelectedPCodeClient = PCodeList.FirstOrDefault(cp => cp.CP == SelectedClient.CPCP);
         }
 
         /// <summary>
@@ -267,6 +293,9 @@ namespace InterfaceAAD.ViewModels
         /// <param name="parameter">The command parameter.</param>
         private void EliminarCliente(object parameter)
         {
+            if (SelectedClient.ClienteNIF == 0)
+                return;
+            
             // Display a confirmation message
             MessageBoxResult result = MessageBox.Show("Tem a certeza de que deseja eliminar este cliente?", "Confirmação", MessageBoxButton.YesNo, MessageBoxImage.Question);
 
@@ -274,12 +303,9 @@ namespace InterfaceAAD.ViewModels
             {
                 // Remove the client
                 _clientRepository.Delete(SelectedClient);
-
+                SelectedClient = new Client(0);
                 // Display a success message or handle other operations after deletion
                 MessageBox.Show($"{SelectedClient.ClienteNome} foi eliminado com sucesso!");
-
-                // Navigate to ClientsListView after deletion
-                //_navigationService.Navigate(new ClientsListView());
             }
         }
 
@@ -306,7 +332,7 @@ namespace InterfaceAAD.ViewModels
             GetClientContactName();
             FilterClientContactTypes();
         }
-
+        
         #endregion
     }
 }
