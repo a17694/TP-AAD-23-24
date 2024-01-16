@@ -18,14 +18,13 @@ namespace InterfaceAAD.Views
         public ClientEditView(int NIF)
         {
             InitializeComponent();
-            
+
             if (NIF != 0)
             {
                 textBoxNIF.IsReadOnly = true;
             }
-            
-            DataContext = new ClientEditViewModel(NIF);
 
+            DataContext = new ClientEditViewModel(NIF);
         }
 
         /// <summary>
@@ -52,13 +51,10 @@ namespace InterfaceAAD.Views
 
         private void NumericTextBox_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
-            
             if (!char.IsDigit(e.Text, 0))
             {
-                e.Handled = true; 
+                e.Handled = true;
             }
         }
-
-
     }
 }

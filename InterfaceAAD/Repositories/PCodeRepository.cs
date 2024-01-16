@@ -1,11 +1,6 @@
 ﻿using InterfaceAAD.Models.Entities;
 using InterfaceAAD.Models.Interfaces;
-using System;
-using System.Collections.Generic;
 using System.Data.SqlClient;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 
 namespace InterfaceAAD.Repositories
@@ -23,7 +18,7 @@ namespace InterfaceAAD.Repositories
                 {
                     using (SqlDataReader reader = command.ExecuteReader())
                     {
-                        while(reader.Read())
+                        while (reader.Read())
                         {
                             PCode pCode = new PCode
                             {
@@ -33,16 +28,14 @@ namespace InterfaceAAD.Repositories
 
                             pCodeList.Add(pCode);
                         }
-
-
                     }
                 }
-                catch(Exception ex)
+                catch (Exception ex)
                 {
                     MessageBox.Show($"{ex}");
                 }
-            return pCodeList;
 
+            return pCodeList;
         }
 
         public PCode GetById(int id)
@@ -55,9 +48,9 @@ namespace InterfaceAAD.Repositories
             throw new NotImplementedException();
         }
 
-        public bool Delete(PCode entity) 
-        { 
-            throw new NotImplementedException(); 
+        public bool Delete(PCode entity)
+        {
+            throw new NotImplementedException();
         }
     }
 }

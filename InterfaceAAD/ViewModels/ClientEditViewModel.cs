@@ -167,7 +167,6 @@ namespace InterfaceAAD.ViewModels
             SelectedPCodeClient = PCodeList.FirstOrDefault(cp => cp.CP == SelectedClient.CPCP);
         }
 
-
         /// <summary>
         /// Loads client contacts and associates contact types.
         /// </summary>
