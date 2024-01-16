@@ -1,6 +1,7 @@
 ﻿using System.Windows;
 using InterfaceAAD.ViewModels;
 using System.Windows.Controls;
+using InterfaceAAD.Models.Entities;
 
 namespace InterfaceAAD.Views
 {
@@ -16,12 +17,12 @@ namespace InterfaceAAD.Views
         public ClientEditView(int NIF)
         {
             InitializeComponent();
-            
+
             if (NIF != 0)
             {
                 textBoxNIF.IsReadOnly = true;
             }
-            
+
             DataContext = new ClientEditViewModel(NavigationService, NIF);
 
         }
@@ -33,6 +34,20 @@ namespace InterfaceAAD.Views
         private void BackButton_Click(object sender, RoutedEventArgs e)
         {
             NavigationService?.GoBack();
+        }
+
+
+        private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (sender is ComboBox comboBox && comboBox.SelectedItem != null)
+            {
+                // Atualize manualmente a propriedade SelectedClient.CPCP
+                if (DataContext is ClientEditViewModel clientEditViewModel)
+                {
+                    clientEditViewModel.SelectedClient.CPCP = ((PCode)comboBox.SelectedItem).CP;
+                }
+            }
+
         }
     }
 }

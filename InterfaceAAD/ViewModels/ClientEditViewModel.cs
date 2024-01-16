@@ -25,6 +25,7 @@ namespace InterfaceAAD.ViewModels
         private string _novoContato;
         private string _novoContatoTipo;
         private List<TipoContacto> _filteredTipoContacto;
+        private List<PCode> _pCodeList;
 
 
         /// <summary>
@@ -107,6 +108,16 @@ namespace InterfaceAAD.ViewModels
             }
         }
 
+        public List<PCode> PCodeList
+        {
+            get { return _pCodeList; }
+            set
+            {
+                _pCodeList = value;
+                OnPropertyChanged(nameof(PCodeList));
+            }
+        }
+
         #endregion
 
         #region Constructor
@@ -139,6 +150,11 @@ namespace InterfaceAAD.ViewModels
             FilterClientContactTypes();
 
             GetClientContactName();
+
+            PCodeRepository pCodeRepository = new PCodeRepository();
+            PCodeList = pCodeRepository.GetAll();
+
+
         }
 
         /// <summary>
