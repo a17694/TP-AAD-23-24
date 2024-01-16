@@ -50,7 +50,7 @@
         <Label Grid.Row="4" Grid.Column="0">Morada *</Label>
         <TextBox Grid.Row="4" Grid.Column="1" Margin="5,0,5,10" Text="{Binding SelectedClient.ClienteMorada}" />
         <Label Grid.Row="4" Grid.Column="0" Margin="0,30,0,30" Grid.RowSpan="3">Código Postal *</Label>
-        <ComboBox Name="PCodeComboBox" Grid.Row="4" Grid.Column="1" Margin="5,30,5,5" ItemsSource="{Binding PCodeList}" DisplayMemberPath="CP" SelectedItem="{Binding SelectedItem, Mode=TwoWay}" SelectionChanged="ComboBox_SelectionChanged" Grid.RowSpan="2"/>
+        <ComboBox Name="PCodeComboBox" Grid.Row="4" Grid.Column="1" Margin="5,30,5,5" ItemsSource="{Binding PCodeList}" DisplayMemberPath="CP" SelectedItem="{Binding SelectedPCodeClient}" SelectionChanged="PCodeComboBox_SelectionChanged" Grid.RowSpan="2"/>
 
         <Label Grid.Row="5" Grid.Column="0" Margin="0,30,0,30" Grid.RowSpan="3">Adicionar Contacto*</Label>
         <StackPanel Grid.Row="5" Grid.Column="1" Orientation="Horizontal" Margin="5,26,0,4" Grid.RowSpan="2">

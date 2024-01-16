@@ -37,17 +37,20 @@ namespace InterfaceAAD.Views
         }
 
 
-        private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void PCodeComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (sender is ComboBox comboBox && comboBox.SelectedItem != null)
             {
-                // Atualize manualmente a propriedade SelectedClient.CPCP
+                PCode selectedPCodeClient = (PCode)comboBox.SelectedItem;
+
+                // Atualize os dados do cliente
                 if (DataContext is ClientEditViewModel clientEditViewModel)
                 {
-                    clientEditViewModel.SelectedClient.CPCP = ((PCode)comboBox.SelectedItem).CP;
+                    clientEditViewModel.SelectedClient.CPCP = selectedPCodeClient.CP;
                 }
             }
-
         }
+
+
     }
 }
