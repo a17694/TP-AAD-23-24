@@ -63,21 +63,29 @@ namespace InterfaceAAD.Repositories
             return false;
         }
 
+        /// <summary>
+        /// Deletes a client entity from the database.
+        /// </summary>
+        /// <param name="client">The client entity to be deleted.</param>
+        /// <returns>True if the delete operation is successful, otherwise false.</returns>
         public bool Delete(Client client)
         {
             using (SqlCommand command = new SqlCommand("DELETE FROM Cliente WHERE ClienteNIF = @NIF", _db))
             {
+                // Set the parameter for the client's NIF
                 command.Parameters.AddWithValue("@NIF", client.ClienteNIF);
 
                 try
                 {
+                    // Execute the delete command
                     int rowsAffected = command.ExecuteNonQuery();
 
+                    // Return true if rows were affected (successful delete), otherwise false
                     return rowsAffected > 0;
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show($"Erro durante a exclusão: {ex.Message}");
+                    MessageBox.Show($"Erro ao remover: {ex.Message}");
                     return false;
                 }
             }
