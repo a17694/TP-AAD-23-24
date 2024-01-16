@@ -43,7 +43,6 @@ namespace InterfaceAAD.Views
             {
                 PCode selectedPCodeClient = (PCode)comboBox.SelectedItem;
 
-                // Atualize os dados do cliente
                 if (DataContext is ClientEditViewModel clientEditViewModel)
                 {
                     clientEditViewModel.SelectedClient.CPCP = selectedPCodeClient.CP;
