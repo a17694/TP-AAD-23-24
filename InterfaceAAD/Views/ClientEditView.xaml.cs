@@ -16,6 +16,12 @@ namespace InterfaceAAD.Views
         public ClientEditView(int NIF)
         {
             InitializeComponent();
+            
+            if (NIF != 0)
+            {
+                textBoxNIF.IsReadOnly = true;
+            }
+            
             DataContext = new ClientEditViewModel(NavigationService, NIF);
 
         }

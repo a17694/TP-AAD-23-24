@@ -273,14 +273,13 @@ namespace InterfaceAAD.ViewModels
             if (result == MessageBoxResult.Yes)
             {
                 // Remove the client
-               
-                //_clientRepository.Delete(SelectedClient);
+                _clientRepository.Delete(SelectedClient);
 
                 // Display a success message or handle other operations after deletion
                 MessageBox.Show($"{SelectedClient.ClienteNome} foi eliminado com sucesso!");
 
                 // Navigate to ClientsListView after deletion
-                _navigationService?.Navigate(new ClientsListView());
+                //_navigationService.Navigate(new ClientsListView());
             }
         }
 

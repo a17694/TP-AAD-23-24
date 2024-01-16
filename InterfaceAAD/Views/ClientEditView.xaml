@@ -38,10 +38,13 @@
 
         <TextBlock Grid.Row="0" Grid.ColumnSpan="2" FontSize="24" Margin="0,0,0,30" Grid.RowSpan="2">Utilizador</TextBlock>
 
-        <Label Grid.Row="1" Grid.Column="0">Nome *</Label>
-        <TextBox Grid.Row="1" Grid.Column="1" Margin="5,0,5,10" Text="{Binding SelectedClient.ClienteNome}" />
-        <Label Grid.Row="1" Grid.Column="0" Margin="0,30,0,34" Grid.RowSpan="3">NIF *</Label>
-        <TextBox Grid.Row="1" Grid.Column="1" Margin="5,30,5,5" Text="{Binding SelectedClient.ClienteNIF}" Grid.RowSpan="2" />
+        
+        <Label Grid.Row="1" Grid.Column="0" >NIF *</Label>
+        <TextBox Name="textBoxNIF" Grid.Row="1" Grid.Column="1" Margin="5,0,5,10" Text="{Binding SelectedClient.ClienteNIF}" IsReadOnly="False" />
+        
+        <Label Grid.Row="1" Grid.Column="0" Margin="0,30,0,34" Grid.RowSpan="3">Nome *</Label>
+        <TextBox Grid.Row="1" Grid.Column="1" Margin="5,30,5,5" Text="{Binding SelectedClient.ClienteNome}" Grid.RowSpan="2" />
+        
         <Label Grid.Row="3" Grid.Column="0" Margin="0,0,0,30" Grid.RowSpan="2">Data Nascimento *</Label>
         <DatePicker Grid.Row="3" Grid.Column="1" Margin="5,0,5,10" SelectedDate="{Binding SelectedClient.ClienteDataNasc, StringFormat='dd/MM/yyyy'}" />
         <Label Grid.Row="4" Grid.Column="0">Morada *</Label>

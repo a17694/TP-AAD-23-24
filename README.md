@@ -10,7 +10,7 @@ Esta interface deverá incluir as seguintes funcionalidades:
 
 - [x] Introdução de dados em várias tabelas em simultâneo (exemplo: inserção de um cliente com um ou vários contactos.)
 - [x] Alteração de dados;
-- [ ] Eliminação de dados;
+- [x] Eliminação de dados;
 - [x] Uma query elaborada a partir de várias tabelas;
 - [x] 1 Stored Procedure
 
